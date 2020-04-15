@@ -46,7 +46,7 @@
                            class="js-locations nk-select-default line-with-select"
                            formControlName="site"
                            (nkSelectOnChange)="onSiteSelect()"
-                           [nkSelectPrimaryKey]="'siteSourceId'"
+                           [nkSelectPrimaryKey]="'id'"
                            [appendTo]="'self'"
                            required
                            [nkSelectDataBindingMode]="'byDataSource'"
@@ -55,51 +55,49 @@
                     <ng-template #itemTemplate
                                  let-controlItem="controlItem">
                         <div class="field-item text-overflow"
-                             title="{{controlItem.siteCode + ' ' + controlItem.siteDescription}}">
-                            {{controlItem.siteCode + ' ' + controlItem.siteDescription}}
+                             title="{{controlItem.name}}">
+                            {{controlItem.name}}
                         </div>
                     </ng-template>
                 </nk-select>
             </div>
             <div class="flex-box">
-                <label class="label-text inline-label label required">Customers</label>
+                <label class="label-text inline-label label">Customers</label>
                 <nk-select #customerSelect
                            class="js-customers nk-select-default line-with-select"
                            formControlName="customer"
                            [nkSelectCache]="false"
                            (nkSelectOnChange)="onCustomerSelect()"
-                           [nkSelectPrimaryKey]="'customerId'"
+                           [nkSelectPrimaryKey]="'id'"
                            [appendTo]="'self'"
-                           required
                            [nkSelectDataBindingMode]="'byDataSource'"
                            [nkSelectDataSource]="getCustomerCollection"
                            [nkSelectFilterBy]="'customerDescription'">
                     <ng-template #itemTemplate
                                  let-controlItem="controlItem">
                         <div class="field-item text-overflow"
-                             title="{{controlItem.customerCode + ' ' + controlItem.customerDescription}}">
-                            {{controlItem.customerCode + ' ' + controlItem.customerDescription}}
+                             title="{{controlItem.name}}">
+                            {{controlItem.name}}
                         </div>
                     </ng-template>
                 </nk-select>
             </div>
             <div class="flex-box">
-                <label class="label-text inline-label label required">Locations</label>
+                <label class="label-text inline-label label">Locations</label>
                 <nk-select #locationSelect
                            class="js-locations nk-select-default line-with-select"
                            formControlName="location"
                            (nkSelectOnChange)="onLocationSelect()"
-                           [nkSelectPrimaryKey]="'locationId'"
+                           [nkSelectPrimaryKey]="'id'"
                            [appendTo]="'self'"
-                           required
                            [nkSelectDataBindingMode]="'byDataSource'"
                            [nkSelectDataSource]="getLocationCollection"
                            [nkSelectFilterBy]="'locationDescription'">
                     <ng-template #itemTemplate
                                  let-controlItem="controlItem">
                         <div class="field-item text-overflow"
-                             title="{{controlItem.locationCode + ' ' + controlItem.locationDescription}}">
-                            {{controlItem.locationCode + ' ' + controlItem.locationDescription}}
+                             title="{{controlItem.name}}">
+                            {{controlItem.name}}
                         </div>
                     </ng-template>
                 </nk-select>

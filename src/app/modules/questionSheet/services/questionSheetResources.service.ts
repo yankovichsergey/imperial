@@ -75,14 +75,14 @@ export class QuestionSheetResourcesService {
                     .subscribe(
                         (response: any) => {
                             this.locations = this.locationResponseToCollection(response);
-                            observer.next(this.filterLocation(selector.customerSourceId));
+                            observer.next(this.filterLocation(selector));
                         },
                         (error: any) => {
                             observer.error(error);
                         }
                     );
             } else {
-                observer.next(this.filterLocation(selector.customerSourceId));
+                observer.next(this.filterLocation(selector));
             }
         });
         return data;
@@ -93,17 +93,20 @@ export class QuestionSheetResourcesService {
     }
 
     private locationResponseToCollection(response: any): Array<any> {
-        return (response.values as Array<any>).map((t: Array<any>) => {
-            return {
-                customerSourceId: t[0],
-                locationSourceId: t[4],
-                locationId: t[5],
-                locationCode: t[6],
-                locationDescription: t[7]
-            };
-        })
+        return (response.values as Array<any>)
+            .map((t: Array<any>) => {
+                return {
+                    id: t[4] + t[5],
+                    name: t[6] + ' ' + t[7],
+                    customerSourceId: t[0],
+                    locationSourceId: t[4],
+                    locationId: t[5],
+                    locationCode: t[6],
+                    locationDescription: t[7]
+                };
+            })
             .filter((item, index, self) => {
-                return item.locationSourceId !== '' && index === self.findIndex((t) => (t.locationSourceId === item.locationSourceId));
+                return item.id !== '' && index === self.findIndex((t) => (t.id === item.id));
             });
     }
 
@@ -111,29 +114,34 @@ export class QuestionSheetResourcesService {
         return (response.values as Array<any>)
             .map((t: Array<any>) => {
                 return {
-                    siteId: t[3],
+                    id: t[3] + t[0],
+                    name: t[2] + ' ' + t[1],
+                    siteId: t[0],
                     siteDescription: t[1],
                     siteCode: t[2],
                     siteSourceId: t[3]
                 };
             })
             .filter((item, index, self) => {
-                return item.siteSourceId !== '' && index === self.findIndex((t) => (t.siteSourceId === item.siteSourceId));
+                return item.id !== '' && index === self.findIndex((t) => (t.id === item.id));
             });
     }
 
     private customersResponseToCollection(response: any): Array<any> {
-        return (response.values as Array<any>).map((t: Array<any>) => {
-            return {
-                siteSourceId: t[0],
-                customerSourceId: t[1],
-                customerId: t[2],
-                customerCode: t[3],
-                customerDescription: t[4]
-            };
-        })
+        return (response.values as Array<any>)
+            .map((t: Array<any>) => {
+                return {
+                    id: t[1] + t[2],
+                    name: t[3] + ' ' + t[4],
+                    siteSourceId: t[0],
+                    customerSourceId: t[1],
+                    customerId: t[2],
+                    customerCode: t[3],
+                    customerDescription: t[4]
+                };
+            })
             .filter((item, index, self) => {
-                return item.customerSourceId !== '' && index === self.findIndex((t) => (t.customerSourceId === item.customerSourceId));
+                return item.id !== '' && index === self.findIndex((t) => (t.id === item.id));
             });
     }
 
@@ -148,10 +156,10 @@ export class QuestionSheetResourcesService {
         return JSON.parse(JSON.stringify(result));
     }
 
-    private filterLocation(customerSourceId: string): Array<any> {
+    private filterLocation(value: any): Array<any> {
         let result;
-        if (customerSourceId) {
-            result = this.locations.filter(t => t.customerSourceId === customerSourceId);
+        if (value) {
+            result = this.locations.filter(t => t.customerSourceId === value.customerSourceId && t.locationId === value.customerId);
         } else {
             result = this.locations;
         }

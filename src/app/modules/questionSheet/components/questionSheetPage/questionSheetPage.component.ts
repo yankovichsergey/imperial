@@ -78,6 +78,7 @@ export class QuestionSheetPageComponent implements OnDestroy {
 
     public getLocationCollection = (selector: any): Observable<any> => {
         selector.customerSourceId = this.customerSelect?.selectedItem?.customerSourceId;
+        selector.customerId = this.customerSelect?.selectedItem?.customerId;
         return this.questionSheetResourcesService.locationCollection(selector);
     }
 
