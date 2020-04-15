@@ -101,7 +101,10 @@ export class QuestionSheetResourcesService {
                 locationCode: t[6],
                 locationDescription: t[7]
             };
-        });
+        })
+            .filter((item, index, self) => {
+                return item.locationSourceId !== '' && index === self.findIndex((t) => (t.locationSourceId === item.locationSourceId));
+            });
     }
 
     private sitesResponseToCollection(response: any): Array<any> {
@@ -128,7 +131,10 @@ export class QuestionSheetResourcesService {
                 customerCode: t[3],
                 customerDescription: t[4]
             };
-        });
+        })
+            .filter((item, index, self) => {
+                return item.customerSourceId !== '' && index === self.findIndex((t) => (t.customerSourceId === item.customerSourceId));
+            });
     }
 
     private filterCustomers(siteSourceId: string): Array<any> {
