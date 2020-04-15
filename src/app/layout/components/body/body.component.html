@@ -1,0 +1,8 @@
+<div id="wrap">
+    <div id="main" class="page-content content-top-level">
+        <bread-crumbs></bread-crumbs>
+        <div [@routerTransition]="getState(o)">
+            <router-outlet #o="outlet"> </router-outlet>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+<div *ngIf="!isIframe"
+     [@routerTransition]="getState(o)">
+    <router-outlet #o="outlet"></router-outlet>
+</div>
+

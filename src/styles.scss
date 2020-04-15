@@ -1,0 +1,251 @@
+@import "./src/app/content/css/variables/colorVariables.scss";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import "./src/app/content/css/variables/responsiveVariables.scss";
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+    margin: 0;
+    font-size: 12px;
+
+    #wrap {
+        overflow: auto;
+        height: calc(100vh - 57px);
+    }
+}
+
+* {
+    font-family: "Open Sans";
+}
+
+.h2 {
+    font-size: 19px;
+    color: $colorBlackPale;
+    margin: 0;
+}
+
+.input {
+    border-radius: 2px;
+    border: 1px solid $colorGray;
+    outline: none;
+    -webkit-appearance: none;
+    padding: 3px 9px;
+    box-sizing: border-box;
+    height: 26px;
+    line-height: 24px;
+    width: 100%;
+
+    &.ng-invalid.ng-touched {
+        border: 1px solid $colorRed;
+        background-color: $colorLightRed;
+    }
+}
+
+.form-block {
+    position: relative;
+
+    .ng-invalid.ng-touched {
+        border-color: $colorRed;
+    }
+
+    .required::after {
+        color: $colorRed2;
+        content: " *";
+    }
+}
+
+.flex-box {
+    display: flex;
+    justify-content: flex-start;
+    padding: 4.5px 0;
+    align-items: center;
+
+    .text-form {
+        height: 26px;
+        min-width: 209px;
+        border: 1px solid $colorGray4;
+        border-radius: 3px;
+        padding: 0 10px;
+    }
+
+    .text-form:focus {
+        outline: $colorBlack 1px;
+        box-shadow: 0 0 0 0px $colorBlack;
+    }
+
+    .label-text {
+        color: $colorGray4;
+        font-size: 12px;
+        padding: 5px 0;
+    }
+}
+
+.global-top-level {
+    z-index: 1000000;
+}
+
+.menu-top-upper-level {
+    z-index: 999;
+}
+
+.menu-top-level {
+    z-index: 99998;
+}
+
+.menu-top-bottom-level {
+    z-index: 99997;
+}
+
+.content-top-upper-level {
+    z-index: 10001;
+}
+
+.content-top-level {
+    z-index: 10000;
+}
+
+.button {
+    height: 28px;
+    line-height: 28px;
+    box-sizing: border-box;
+    padding: 0 15px;
+    min-width: 60px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    text-transform: capitalize;
+    background: $colorGray3;
+    outline: none;
+    display: inline-block;
+    margin: 0;
+    -webkit-appearance: none;
+    border: 1px solid $colorGray3;
+
+    &:focus {
+        outline: 0;
+    }
+
+    &[disabled] {
+        opacity: 0.5;
+        cursor: auto;
+    }
+}
+
+.title-page-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-element::after {
+    color: $colorDarkBlue1;
+    content: "+";
+    width: 17px;
+    height: 17px;
+    line-height: 17px;
+    border: $colorDarkBlue1 solid 1px;
+    border-radius: 3px;
+    font-size: 28px;
+    display: block;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background: $colorWhite;
+    color: $colorBlack;
+}
+
+.block-disable {
+    background: $colorWhite;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.relative-loading {
+    background: url("./app/content/images/ajax-loader.gif") no-repeat scroll center center rgba(255, 255, 255, 0.7);
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    -o-transition: all 0.3s ease-in;
+    -webkit-transition: all 0.3s ease-in;
+    -moz-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in;
+}
+
+.relative-loading-hide {
+    opacity: 0;
+}
+
+.no-data {
+    display: flex;
+    align-items: center;
+}
+
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-normal,
+.text-common {
+    font-size: 12px;
+    color: $colorBlack;
+}
+
+.xs {
+    .text-normal,
+    .text-common {
+        font-size: 10px;
+    }
+
+    .text-common-bold {
+        font-size: 10px;
+    }
+
+    .text-sub-header,
+    .text-bold {
+        font-size: 10px;
+    }
+}
+
+.text-common-bold {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.text-sub-header,
+.text-bold {
+    font-size: 12px;
+    color: $colorBlack;
+    font-weight: bold;
+}
+
+.text-grey {
+    color: $colorBlackVeryPale;
+}
+
+.item-info-block > div span + span {
+    margin-left: 5px;
+}
+
+@media screen and (max-width: $xs-max) {
+    .flex-box {
+        flex-wrap: wrap;
+
+        .text-form {
+            height: 26px;
+            min-width: 209px;
+            border: 1px solid $colorGray4;
+            border-radius: 3px;
+            padding: 0 10px;
+        }
+    }
+}

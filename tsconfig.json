@@ -1,0 +1,46 @@
+{
+  "disableCompileOnSave": true,
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@appModels": [
+        "src/app/common/models"
+      ],
+      "@appServices": [
+        "src/app/common/services"
+      ],
+      "@appTextResources": [
+        "src/app/textResources/en"
+      ],
+      "@nkControls": [
+        "src/libControls"
+      ],
+      "@appConstants": [
+        "src/app/common/constants"
+      ],
+      "@appComponents": [
+        "src/app/common/components"
+      ]
+    },
+    "outDir": "./dist",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "module": "esnext",
+    "suppressImplicitAnyIndexErrors": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  }
+}

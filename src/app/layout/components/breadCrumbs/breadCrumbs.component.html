@@ -1,0 +1,8 @@
+<div class="breadcrumbs">
+        <div class="item-breadcrumbs" *ngFor="let item of breadCrumbs.items">
+            <div class="chevron-left-icon-dark-blue"></div>
+            <span class="text-nowrap text-overflow item-action">
+                <a [routerLink]="item.routerLink" [queryParams]="item.queryParams">{{item.displayName}} </a>
+            </span>
+        </div>
+    </div>

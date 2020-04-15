@@ -1,0 +1,32 @@
+﻿    .ribbon-no-items {
+        .no-items-messageContainerWrapper {
+            text-align: center;
+        }
+
+        .no-items-messageContainer {
+            border: 1px solid;
+            border-radius: 4px;
+            display: inline-block;
+            min-width: 300px;
+            max-width: 75%;
+            min-height: 68px;
+            box-sizing: border-box;
+            padding: 17px;
+            margin-top: 79px;
+            background-color: #ffffff;
+        }
+
+        .no-items-messageWrapper {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            height: 100%;
+            min-height: inherit;
+            overflow: auto;
+        }
+
+        .no-items-message {
+            width: 100%;
+            text-align: center;
+        }
+    }

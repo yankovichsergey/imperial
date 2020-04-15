@@ -1,0 +1,86 @@
+@import "../variables/colorVariables.scss";
+
+.nk-date-dropper-control {
+  width: 100%;
+  max-width: 202px;
+  min-width: 105px;
+  .nk-date-dropper-wrapper {
+    border: 1px solid $colorBlack;
+    flex-direction: row-reverse;
+    .nk-date-dropper-input-wrapper {
+      width: 100%;
+    }
+    .nk-date-dropper-icon-trigger {
+      width: 26px;
+      right: 1px;
+      position: relative;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url("src/app/content/images/datapicker.svg");
+    }
+  }
+
+  input {
+    box-sizing: border-box;
+    border: none;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 12px;
+    min-width: auto;
+    width: 100%;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.nk-date-dropper-container {
+  &.date-dropper .picker .pick-lg ul.pick-lg-b li.pick-sl:before {
+    background-color: $colorGreen;
+  }
+
+  &.date-dropper {
+    .pick {
+      li {
+      }
+
+      .pick-i-l:before,
+      .pick-i-r:before {
+        content: "";
+      }
+
+      .pick-i-r {
+        background-image: url("src/app/content/images/chevron-right-solid.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 15px 15px;
+        width: 15px;
+        height: 15px;
+      }
+
+      .pick-i-l {
+        background-image: url("src/app/content/images/chevron-left-solid.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 15px 15px;
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    .picker .pick-lg {
+      ul .pick-v {
+        color: $colorDarkBlue2;
+
+        &.pick-sl {
+          color: $colorWhite;
+        }
+      }
+
+      ul.pick-lg-b {
+        padding-bottom: 3px;
+      }
+    }
+  }
+}

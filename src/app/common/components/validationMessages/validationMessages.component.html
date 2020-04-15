@@ -1,0 +1,27 @@
+﻿<div class="invalid-feedback-block" *ngIf="control?.invalid && (control?.dirty || control?.touched)"
+    @fadeInContentByHeightOpacity>
+    <div class="message-error" *ngIf="control.errors.required" @fadeInContentByHeightOpacity>
+        {{required}}
+    </div>
+    <div class="message-error" *ngIf="control.errors.pattern" @fadeInContentByHeightOpacity>
+        {{pattern}}
+    </div>
+    <div class="message-error" *ngIf="control.errors.minlength" @fadeInContentByHeightOpacity>
+        {{minLength}}
+    </div>
+    <div class="message-error" *ngIf="control.errors.maxlength" @fadeInContentByHeightOpacity>
+        {{maxLength}}
+    </div>
+    <div class="message-error" *ngIf="control.errors.equalValues" @fadeInContentByHeightOpacity>
+        {{equalValues}}
+    </div>
+    <div class="message-error" *ngIf="control.errors.dateTimeInvalid" @fadeInContentByHeightOpacity>
+        {{dateTimeInvalid}}
+    </div>
+    <div class="message-error" *ngIf="control.errors.max" @fadeInContentByHeightOpacity>
+        {{max}}
+    </div>
+    <div class="message-error" *ngIf="control.errors.other" @fadeInContentByHeightOpacity>
+        {{other}}
+    </div>
+</div>

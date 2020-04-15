@@ -1,0 +1,19 @@
+
+.thanks {
+    text-align: center;
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .logo {
+        width: 240px;
+        height: 54px;
+        background-image: url("src/app/content/images/imperial-logo.png");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin: 0 auto 50px;
+    }
+
+}

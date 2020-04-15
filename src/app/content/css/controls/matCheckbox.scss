@@ -1,0 +1,6 @@
+@import "../variables/colorVariables.scss";
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: $colorGreen2;
+}

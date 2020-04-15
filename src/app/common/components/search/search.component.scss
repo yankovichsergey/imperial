@@ -1,0 +1,52 @@
+﻿@import "./src/app/content/css/variables/colorVariables.scss";
+ng-search {
+  display: inline-block;
+  position: relative;
+
+  .wrapper {
+    display: flex;
+    position: relative;
+    input[type="search"] {
+      height: 26px;
+      padding: 1px 30px 3px 30px;
+      outline: none;
+      border: 1px solid $colorLightGray2;
+      width: 220px;
+    }
+
+    input[type="search"].value-exist {
+        padding: 1px 30px 3px 5px;
+      }
+
+    input[type="search"]:focus {
+        border-color: $colorGray5;
+      }
+
+    .popup input[type="search"] {
+      border-radius: 2px;
+      border: 1px solid $colorLightGray2;
+    }
+
+    input[type="search"]::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+
+    input[type="search"]::placeholder {
+      color: $colorCloud;
+    }
+
+    .icon-search {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      margin-left: 5px;
+    }
+
+    .icon-cancel-search {
+      right: 0;
+      top: 2px;
+      margin-right: 5px;
+      position: absolute;
+    }
+  }
+}

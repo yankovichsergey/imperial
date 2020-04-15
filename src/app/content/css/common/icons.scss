@@ -1,0 +1,61 @@
+@mixin icon-withText($imgWidth) {
+    width: $imgWidth;
+
+    &.icon-withText {
+        width: auto;
+        padding-left: $imgWidth + 6px;
+    }
+}
+
+.burger-menu-icon {
+    background-image: url("src/app/content/images/bars-white.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    width: 18px;
+    height: 20px;
+}
+
+.edit-icon {
+    background-image: url("src/app/content/images/edit.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.chevron-left-icon-dark-blue {
+    background-image: url("src/app/content/images/chevron-left-solid-dark-blue.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 12px 12px; 
+    width: 24px;
+    height: 20px;
+}
+.icon-search {
+    background-image: url("src/app/content/images/search.svg");
+    @include icon-withText(21px);
+    height: 21px;
+    background-size: 16px 16px; 
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.icon-cancel-search {
+    background-image: url("src/app/content/images/cancel-search.svg");
+    @include icon-withText(21px);
+    height: 21px;
+    background-size: 20px 20px; 
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.remove-icon {
+    background-image: url("src/app/content/images/cancel.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 34px 34px;
+    width: 20px;
+    height: 20px;
+}

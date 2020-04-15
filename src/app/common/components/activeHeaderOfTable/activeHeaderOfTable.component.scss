@@ -1,0 +1,44 @@
+﻿@import "./src/app/content/css/variables/colorVariables.scss";
+.ribbon-header {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 20px;
+  .header-element {
+    min-width: 70px;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    .icon-sort {
+      width: 0;
+      height: 0;
+      margin: 0 4px;
+      display: inline-block;
+      vertical-align: middle;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 8px solid;
+      transform-origin: 4px 4px;
+      color: $colorGray4;
+      top: 0;
+      bottom: 0;
+      margin-bottom: auto;
+      margin-top: auto;
+      right: 4px;
+      &.selected {
+        color: $colorRed;
+      }
+    }
+  }
+}
+.table {
+  .column {
+    min-width: 70px;
+  }
+}
+
+.xs {
+  .ribbon-header {
+    padding: 0;
+  }
+}

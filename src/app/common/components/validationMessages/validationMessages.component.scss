@@ -1,0 +1,11 @@
+﻿@import "./src/app/content/css/variables/colorVariables.scss";
+
+.invalid-feedback-block {
+    padding: 5px 0;
+    color: $colorRed;
+    border-radius: 3px;
+    font-size: 12px;
+    .message-error {
+        max-width: 230px;
+    }
+}

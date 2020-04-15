@@ -1,0 +1,61 @@
+﻿@import "../variables/colorVariables.scss";
+
+.nk-ribbon-control {
+    .ribbon-item {
+        font-size: 11px;
+        margin: 10px 0 0 0;
+        border: 1px solid $colorCloud;
+        padding: 15px 20px;
+        background-color: $colorWhite;
+        border-radius: 4px;
+        box-sizing: border-box;
+
+        &.load-data {
+            text-align: center;
+            padding: 13px 14px;
+        }
+    }
+}
+
+.ng-animating {
+    .ribbon-header {
+      top:0;
+    }
+}
+
+.ribbon-header {
+
+    nk-select.dropDownLinkBox {
+        margin: 0;
+
+        .nk-select-view-wrapper {
+            border: 0;
+            border-radius: 0;
+            position: static;
+            cursor: auto;
+
+            .nk-select-view-selected {
+                padding: 0;
+                width: auto;
+            }
+        }
+    }
+}
+//NOTE:SM: For IE11
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .filter-form-wrapper .ribbon-filter-control div.filter-control-data .nk-select-control .nk-select-view-wrapper {
+        border: 1px solid $colorLightGray2;
+    }
+
+    .ribbon-header {
+
+
+
+        nk-select.nk-select-control {
+
+            .nk-menu-container {
+                left: 0 !important;
+            }
+        }
+    }
+}

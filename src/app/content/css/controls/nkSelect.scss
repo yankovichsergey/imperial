@@ -1,0 +1,170 @@
+﻿@import "../variables/colorVariables";
+.ng-invalid.ng-touched nk-select {
+  .nk-select-view-wrapper {
+    border: none;
+  }
+}
+
+nk-select {
+  &.nk-select-control {
+    &:focus {
+      .nk-select-view-default,
+      .nk-select-view-wrapper .nk-select-view-selected {
+        color: $colorBlack;
+      }
+    }
+  }
+  &.nk-select-default {
+    position: relative;
+    width: 202px;
+    border-radius: 2px;
+    height: 28px;
+    line-height: 24px;
+    border: 1px solid $colorBlack;
+    background: $colorWhite;
+    font-weight: normal;
+    font-size: 13px;
+    color: $colorBlack;
+    box-sizing: border-box;
+    background-size: 100% 100%;
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+    margin: 0px;
+    &.nk-select-open-menu {
+      border-color: $colorGray;
+    }
+    .nk-select-view-wrapper {
+      outline: none;
+      cursor: pointer;
+      &:focus {
+        color: $colorBlack;
+      }
+      .nk-select-view-multiple-selected {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 24px;
+      }
+    }
+    .nk-menu-container {
+      margin-left: 0px !important;
+      width: 100%;
+      max-width: 100%;
+      .nk-menu-panel {
+        box-shadow: 0 0 5px 0px $colorGray;
+        border-radius: 3px;
+        overflow-x: auto;
+        margin-top: 1px;
+        .nk-menu-item {
+          margin-left: 0px !important;
+          line-height: 27px;
+          height: 22px;
+          padding: 6px 16px;
+          cursor: pointer;
+          white-space: nowrap;
+          position: relative;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          pseudo-checkbox {
+            margin-right: 8px;
+          }
+          &:hover {
+            color: $colorBlack;
+            background-color: $colorGray2;
+          }
+          &.selected {
+            background-color: $colorGray5;
+          }
+        }
+      }
+    }
+    .nk-select-view-default {
+      padding: 0 0 0 10px;
+      box-sizing: border-box;
+      width: 80%;
+      display: flex;
+      height: 100%;
+    }
+    .nk-select-view-wrapper {
+      border: initial;
+      border-radius: initial;
+      position: initial;
+      border: none;
+      .nk-select-filter-input {
+        border: none;
+        padding: 0 0 0 10px;
+        width: 80%;
+        display: -webkit-box;
+        display: flex;
+        padding-top: 3px;
+      }
+      .nk-select-view-selected {
+        padding: 0 0 0 10px;
+        width: 80%;
+        display: flex;
+        height: 100%;
+      }
+    }
+    .nk-select-arrow {
+      width: 0;
+      height: 0;
+      margin: auto 4px;
+      display: inline-block;
+      vertical-align: middle;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 7px solid;
+      transform-origin: 4px 3px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-color: $colorBlack transparent transparent transparent;
+      background: transparent;
+      right: 7px;
+      transform-origin: 50% 50%;
+    }
+  }
+  &.nk-select-default.ng-invalid.ng-touched {
+    border: 1px solid $colorRed;
+    .nk-select-view-wrapper {
+      border: none;
+    }
+  }
+  &.nk-select-disabled {
+    &:focus {
+      border-color: $colorGray5;
+    }
+  }
+  .nk-select-loading {
+    display: none;
+  }
+  .nk-select-control:focus .nk-select-view-default,
+  .nk-select-control:focus .nk-select-view-selected {
+    color: $colorBlack;
+  }
+  .nk-menu-container {
+    .nk-menu-panel {
+      .cdk-virtual-scroll-viewport {
+        overflow-x: hidden;
+        contain: content;
+        .cdk-virtual-scroll-content-wrapper {
+          position: relative;
+        }
+        &.view-port-no-scrollable {
+          height: auto;
+        }
+      }
+    }
+  }
+}
+
+//NOTE:SM: For IE11
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  nk-select.nk-select-default.nk-select-control {
+    .nk-menu-container {
+      left: 0 !important;
+    }
+  }
+}

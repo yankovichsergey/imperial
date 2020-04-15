@@ -1,0 +1,231 @@
+<div class="serv-okc">
+    <div class="serv-okc-container">
+        <div class="title-page-block">
+            <h1 class="title-page">OKC Serv Form</h1>
+            <div class="logo"></div>
+        </div>
+        <div class="js-form-block form-block"
+             [formGroup]="model.form">
+            <div class="flex-box">
+                <label class="label-text inline-label label">Name</label>
+                <div class="flex-box name">
+                    <div class="flex-box">
+                        <input class="text-form"
+                               type="text"
+                               formControlName="firstName">
+                        <label class="label-text inline-label label">First Name</label>
+                    </div>
+                    <div class="flex-box">
+                        <input class="text-form"
+                               type="text"
+                               formControlName="lastName">
+                        <label class="label-text inline-label label">Last Name</label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-box date-picker">
+                <label class="label-text inline-label label required">Date</label>
+                <div class="date-picker-block margin-bottom">
+                    <nk-date-dropper #servOkcDateDropper
+                                     [lang]="'en'"
+                                     [large-default]="true"
+                                     [large-mode]="true"
+                                     [max-year]="2099"
+                                     [format]="'MM/dd/yyyy'"
+                                     [appendTo]="'self'"
+                                     formControlName="servOkcDate">
+                    </nk-date-dropper>
+                    <validation-messages [control]="model.form.controls.servOkcDate"
+                                         [required]="'Date is required'">
+                    </validation-messages>
+                </div>
+            </div>
+            <div class="flex-box">
+                <label class="label-text inline-label label required">Branch</label>
+                <nk-select #siteSelect
+                           class="js-locations nk-select-default line-with-select"
+                           formControlName="site"
+                           (nkSelectOnChange)="onSiteSelect()"
+                           [nkSelectPrimaryKey]="'siteSourceId'"
+                           [appendTo]="'self'"
+                           required
+                           [nkSelectDataBindingMode]="'byDataSource'"
+                           [nkSelectDataSource]="getSiteCollection"
+                           [nkSelectFilterBy]="'siteDescription'">
+                    <ng-template #itemTemplate
+                                 let-controlItem="controlItem">
+                        <div class="field-item text-overflow"
+                             title="{{controlItem.siteCode + ' ' + controlItem.siteDescription}}">
+                            {{controlItem.siteCode + ' ' + controlItem.siteDescription}}
+                        </div>
+                    </ng-template>
+                </nk-select>
+            </div>
+            <div class="flex-box">
+                <label class="label-text inline-label label required">Customers</label>
+                <nk-select #customerSelect
+                           class="js-customers nk-select-default line-with-select"
+                           formControlName="customer"
+                           [nkSelectCache]="false"
+                           (nkSelectOnChange)="onCustomerSelect()"
+                           [nkSelectPrimaryKey]="'customerId'"
+                           [appendTo]="'self'"
+                           required
+                           [nkSelectDataBindingMode]="'byDataSource'"
+                           [nkSelectDataSource]="getCustomerCollection"
+                           [nkSelectFilterBy]="'customerDescription'">
+                    <ng-template #itemTemplate
+                                 let-controlItem="controlItem">
+                        <div class="field-item text-overflow"
+                             title="{{controlItem.customerCode + ' ' + controlItem.customerDescription}}">
+                            {{controlItem.customerCode + ' ' + controlItem.customerDescription}}
+                        </div>
+                    </ng-template>
+                </nk-select>
+            </div>
+            <div class="flex-box">
+                <label class="label-text inline-label label required">Locations</label>
+                <nk-select #locationSelect
+                           class="js-locations nk-select-default line-with-select"
+                           formControlName="location"
+                           (nkSelectOnChange)="onLocationSelect()"
+                           [nkSelectPrimaryKey]="'locationId'"
+                           [appendTo]="'self'"
+                           required
+                           [nkSelectDataBindingMode]="'byDataSource'"
+                           [nkSelectDataSource]="getLocationCollection"
+                           [nkSelectFilterBy]="'locationDescription'">
+                    <ng-template #itemTemplate
+                                 let-controlItem="controlItem">
+                        <div class="field-item text-overflow"
+                             title="{{controlItem.locationCode + ' ' + controlItem.locationDescription}}">
+                            {{controlItem.locationCode + ' ' + controlItem.locationDescription}}
+                        </div>
+                    </ng-template>
+                </nk-select>
+            </div>
+            <div class="flex-box upload-file">
+                <label class="label-text inline-label label">Upload Photos</label>
+                <div class="js-upload-file value-block">
+                    <input class="hidden"
+                           ng2FileSelect
+                           #uploaderFile
+                           [uploader]="uploader"
+                           (change)="imageUpload($event)"
+                           type="file">
+                    <button class="form-button"
+                            (click)="uploaderFile.click()">Browse Files
+                    </button>
+                    <div class="upload-area-item"
+                         *ngIf="imageViewName && !model.image">
+                        <span>{{imageViewName}}</span>
+                    </div>
+                    <div class="upload-area-item text-overflow"
+                         *ngIf="imageViewName && model.image">
+                        <a href="{{model.image}}"
+                           target="_blank"
+                           class="file-name text-overflow">{{imageViewName}}</a>
+                        <button class="remove remove-icon"
+                                type="button"
+                                (click)="removeImage()">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-box radio-button-block">
+                <label class="label-text inline-label label">Service</label>
+                <div class="flex-box margin-bottom">
+                    <span>Worst</span>
+                    <mat-radio-group formControlName="service">
+                        <mat-radio-button value="1">1</mat-radio-button>
+                        <mat-radio-button value="2">2</mat-radio-button>
+                        <mat-radio-button value="3">3</mat-radio-button>
+                        <mat-radio-button value="4">4</mat-radio-button>
+                        <mat-radio-button value="5">5</mat-radio-button>
+                    </mat-radio-group>
+                    <span>Best</span>
+                </div>
+            </div>
+            <div class="flex-box service-required">
+                <label class="label-text inline-label label"></label>
+                <div class="flex-box margin-bottom">
+                    <mat-checkbox formControlName="serviceRequired">Service is required?</mat-checkbox>
+                </div>
+            </div>
+            <div class="flex-box radio-button-block">
+                <label class="label-text inline-label label">Equipment</label>
+                <div class="flex-box margin-bottom">
+                    <span>Worst</span>
+                    <mat-radio-group formControlName="equipment">
+                        <mat-radio-button value="1">1</mat-radio-button>
+                        <mat-radio-button value="2">2</mat-radio-button>
+                        <mat-radio-button value="3">3</mat-radio-button>
+                        <mat-radio-button value="4">4</mat-radio-button>
+                        <mat-radio-button value="5">5</mat-radio-button>
+                    </mat-radio-group>
+                    <span>Best</span>
+                </div>
+            </div>
+            <div class="flex-box radio-button-block">
+                <label class="label-text inline-label label">Route Driver</label>
+                <div class="flex-box margin-bottom">
+                    <span>Worst</span>
+                    <mat-radio-group formControlName="routeDriver">
+                        <mat-radio-button value="1">1</mat-radio-button>
+                        <mat-radio-button value="2">2</mat-radio-button>
+                        <mat-radio-button value="3">3</mat-radio-button>
+                        <mat-radio-button value="4">4</mat-radio-button>
+                        <mat-radio-button value="5">5</mat-radio-button>
+                    </mat-radio-group>
+                    <span>Best</span>
+                </div>
+            </div>
+            <div class="flex-box radio-button-block">
+                <label class="label-text inline-label label">Variety</label>
+                <div class="flex-box margin-bottom">
+                    <span>Worst</span>
+                    <mat-radio-group formControlName="variety">
+                        <mat-radio-button value="1">1</mat-radio-button>
+                        <mat-radio-button value="2">2</mat-radio-button>
+                        <mat-radio-button value="3">3</mat-radio-button>
+                        <mat-radio-button value="4">4</mat-radio-button>
+                        <mat-radio-button value="5">5</mat-radio-button>
+                    </mat-radio-group>
+                    <span>Best</span>
+                </div>
+            </div>
+            <div class="flex-box checkbox-block">
+                <label class="label-text inline-label label">What was discussed</label>
+                <div class="flex-box margin-bottom">
+                    <mat-checkbox formControlName="priceIncrease">Price Increase</mat-checkbox>
+                    <mat-checkbox formControlName="spoils">Spoils</mat-checkbox>
+                    <mat-checkbox formControlName="loyaltyProgram">Loyalty Program</mat-checkbox>
+                    <mat-checkbox formControlName="other">Other</mat-checkbox>
+                </div>
+            </div>
+            <div class="flex-box">
+                <label class="label-text inline-label label">Ops Notes</label>
+                <textarea class="textarea-form"
+                          formControlName="opsNotes"
+                          rows="3"></textarea>
+            </div>
+            <div class="flex-box">
+                <label class="label-text inline-label label">Vend Max Comments</label>
+                <textarea class="textarea-form"
+                          formControlName="vendMaxComments"
+                          rows="3"></textarea>
+            </div>
+            <div class="flex-box">
+                <label class="label-text inline-label label">ID</label>
+                <div class="flex-box"><b>{{model.formId}}</b></div>
+            </div>
+            <div class="flex-box">
+                <button class="form-button"
+                        (click)="save()"
+                        [disabled]="isDisabledSave"
+                        [class.disable]="isDisabledSave">Submit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

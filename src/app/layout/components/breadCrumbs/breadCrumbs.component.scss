@@ -1,0 +1,41 @@
+@import "./src/app/content/css/variables/colorVariables.scss";
+@import "./src/app/content/css/variables/responsiveVariables.scss";
+.breadcrumbs {
+  margin-top: 10px;
+  .item-breadcrumbs {
+    display: flex;
+     .item-action {
+      line-height: 22px;
+      height: 22px;
+    }
+    a {
+      color: $colorDarkBlue2;
+      text-decoration: none;
+    }
+  }
+}
+
+@media screen and (min-width: $md-min) {
+  .breadcrumbs {
+    margin-left: 10px;
+    .item-breadcrumbs {
+      font-size: 13px;
+    }
+  }
+}
+
+@media screen and (min-width: $sm-min) and (max-width: $sm-max) {
+  .breadcrumbs {
+    margin-left: 10px;
+    .item-breadcrumbs {
+      font-size: 13px;
+    }
+  }
+}
+@media screen and (max-width: $xs-max) {
+  .breadcrumbs {
+    .item-breadcrumbs {
+      font-size: 11px;
+    }
+  }
+}

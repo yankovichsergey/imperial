@@ -1,0 +1,5 @@
+﻿<div class='wrapper'>
+  <input type="search" #inputSearch (keyup)="onKey($event)" value="{{value}}" placeholder="{{placeholder}}" [ngClass]='value ? "value-exist": ""'/>
+  <i  *ngIf="enabled" (mousedown)="reset()" class="icon-cancel-search ng-reset-search-icon"></i>
+  <i  *ngIf="!enabled" class="icon-search ng-reset-search-icon"></i>
+</div>
