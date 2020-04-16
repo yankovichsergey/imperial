@@ -16,6 +16,7 @@ import { NkSelect } from '@nkControls';
 import { QuestionSheetResourcesService } from '../../services/questionSheetResources.service';
 import { QuestionSheetModel } from '../../models';
 import { PopupsDialogService } from '@appServices';
+import { alertifyError } from '../../../../common/helpers';
 
 
 @Component({
@@ -121,6 +122,7 @@ export class QuestionSheetPageComponent implements OnDestroy {
             },
             (error: any) => {
                 this.popupService.breackRelativeLoading(this.selector);
+                alertifyError(error);
             }
         ));
     }
