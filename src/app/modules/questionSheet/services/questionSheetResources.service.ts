@@ -99,6 +99,7 @@ export class QuestionSheetResourcesService {
                     id: t[4] + t[5],
                     name: t[6] + ' ' + t[7],
                     customerSourceId: t[0],
+                    customerId: t[1],
                     locationSourceId: t[4],
                     locationId: t[5],
                     locationCode: t[6],
@@ -106,7 +107,7 @@ export class QuestionSheetResourcesService {
                 };
             })
             .filter((item, index, self) => {
-                return item.id !== '' && index === self.findIndex((t) => (t.id === item.id));
+                return item.id !== '' && index === self.findIndex(t => (t.id === item.id));
             });
     }
 
@@ -123,7 +124,7 @@ export class QuestionSheetResourcesService {
                 };
             })
             .filter((item, index, self) => {
-                return item.id !== '' && index === self.findIndex((t) => (t.id === item.id));
+                return item.id !== '' && index === self.findIndex(t => (t.id === item.id));
             });
     }
 
@@ -141,7 +142,7 @@ export class QuestionSheetResourcesService {
                 };
             })
             .filter((item, index, self) => {
-                return item.id !== '' && index === self.findIndex((t) => (t.id === item.id));
+                return item.id !== '' && index === self.findIndex(t => (t.id === item.id));
             });
     }
 
@@ -159,7 +160,7 @@ export class QuestionSheetResourcesService {
     private filterLocation(value: any): Array<any> {
         let result;
         if (value) {
-            result = this.locations.filter(t => t.customerSourceId === value.customerSourceId && t.locationId === value.customerId);
+            result = this.locations.filter(t => t.customerSourceId === value.customerSourceId && t.customerId === value.customerId);
         } else {
             result = this.locations;
         }

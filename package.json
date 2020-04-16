@@ -7,6 +7,7 @@
     "start-app-mock": "ng serve --proxy-config proxy.config.json --ssl false --port=4340 --configuration=mock",
     "build-dev": "ng build --no-progress --deploy-url  --resourcesOutputPath=content",
     "build-prod": "node --max_old_space_size=3000 ./node_modules/@angular/cli/bin/ng build --prod --deploy-url",
+    "build-prod-github": "ng build --prod --output-path docs --base-href https://yankovichsergey.github.io/imperialTest/",
     "lint": "ng lint",
     "test": "ng test",
     "test-with-code-coverage": "ng test --no-watch --code-coverage",
