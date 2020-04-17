@@ -3,7 +3,10 @@ import {
     FormControl,
     Validators
 } from '@angular/forms';
-import { Observable, Subscriber, Subscription } from 'rxjs';
+import {
+    Observable,
+    Subscription
+} from 'rxjs';
 import { QuestionSheetResourcesService } from '../services';
 import { QuestionSheetContract } from '../contracts';
 
