@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { ResourceTemplatesService } from '@appServices';
 import { QuestionSheetResourceConstants } from '../constants/index';
 import { Injectable } from '@angular/core';
+import { mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class QuestionSheetResourcesService {
@@ -89,7 +90,15 @@ export class QuestionSheetResourcesService {
     }
 
     public uploadImage(data: File): Observable<any> {
-        return this.resourceTemplates.put(QuestionSheetResourceConstants.UPLOAD_FILE.replace('{fileName}', data.name), data);
+        const contract = {
+            item: {
+                '@odata.type': 'microsoft.graph.driveItemUploadableProperties',
+                '@microsoft.graph.conflictBehavior': 'replace',
+                name: data.name
+            }
+        };
+        return this.resourceTemplates.post(QuestionSheetResourceConstants.UPLOAD_FILE_BY_SESSION.replace('{fileName}', data.name), contract)
+            .pipe(mergeMap(item => this.resourceTemplates.put(item.uploadUrl, data)));
     }
 
     private locationResponseToCollection(response: any): Array<any> {

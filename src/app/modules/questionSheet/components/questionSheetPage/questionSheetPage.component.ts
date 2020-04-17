@@ -135,25 +135,22 @@ export class QuestionSheetPageComponent implements OnDestroy {
 
     public async imageUpload(event: any): Promise<void> {
         if (event.target.files) {
-            const [file] = event.target.files;
-            const isCurrentType = this.uploader.options.allowedMimeType.some((item: string) => item === file.type);
-            const isFileSize = file.size < 4194304;
-            this.model.image = null;
-            this.imageViewName = null;
-            if (isCurrentType && isFileSize) {
+            const file = event.target.files[0];
+            const isCurrentType = this.uploader.options.allowedMimeType.some((item: string) => item === file?.type);
+            if (file && isCurrentType) {
                 this.upload(file);
                 this.model.form.markAsDirty();
             }
-            if (!isCurrentType) {
+            if (file && !isCurrentType) {
+                this.model.image = null;
                 this.imageViewName = 'Invalid file type';
-            }
-            if (!isFileSize) {
-                this.imageViewName = 'Max size 4 mb';
             }
         }
     }
 
     private upload(file: File): void {
+        this.model.image = null;
+        this.imageViewName = null;
         this.popupService.startRelativeLoading(this.uploadFileSelector);
         this.subscriptions.push(
             this.resourceService.uploadImage(file).subscribe((response) => {
