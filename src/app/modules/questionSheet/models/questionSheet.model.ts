@@ -3,10 +3,7 @@ import {
     FormControl,
     Validators
 } from '@angular/forms';
-import {
-    Observable,
-    Subscription
-} from 'rxjs';
+import { Observable, Subscriber, Subscription } from 'rxjs';
 import { QuestionSheetResourcesService } from '../services';
 import { QuestionSheetContract } from '../contracts';
 
@@ -230,20 +227,36 @@ export class QuestionSheetModel {
         this._form.get('priceIncrease').setValue(value);
     }
 
-    public get spoils(): boolean {
-        return this._form.get('spoils').value;
+    public get addingServices(): boolean {
+        return this._form.get('addingServices').value;
     }
 
-    public set spoils(value: boolean) {
-        this._form.get('spoils').setValue(value);
+    public set addingServices(value: boolean) {
+        this._form.get('addingServices').setValue(value);
     }
 
-    public get loyaltyProgram(): boolean {
-        return this._form.get('loyaltyProgram').value;
+    public get serviceIssues(): boolean {
+        return this._form.get('serviceIssues').value;
     }
 
-    public set loyaltyProgram(value: boolean) {
-        this._form.get('loyaltyProgram').setValue(value);
+    public set serviceIssues(value: boolean) {
+        this._form.get('serviceIssues').setValue(value);
+    }
+
+    public get followUp(): boolean {
+        return this._form.get('followUp').value;
+    }
+
+    public set followUp(value: boolean) {
+        this._form.get('followUp').setValue(value);
+    }
+
+    public get marketConversion(): boolean {
+        return this._form.get('marketConversion').value;
+    }
+
+    public set marketConversion(value: boolean) {
+        this._form.get('marketConversion').setValue(value);
     }
 
     public get other(): boolean {
@@ -370,14 +383,18 @@ export class QuestionSheetModel {
             equipment: new FormControl(),
             routeDriver: new FormControl(),
             variety: new FormControl(),
+
             priceIncrease: new FormControl(false),
-            spoils: new FormControl(false),
-            loyaltyProgram: new FormControl(false),
+            addingServices: new FormControl(false),
+            serviceIssues: new FormControl(false),
+            followUp: new FormControl(false),
+            marketConversion: new FormControl(false),
             other: new FormControl(false),
-            service: new FormControl(null, [Validators.required]),
+
+            service: new FormControl(null),
             opsNotes: new FormControl(),
             vendMaxComments: new FormControl(),
-            serviceRequired: new FormControl(true)
+            serviceRequired: new FormControl(false)
         });
         this._form.get('serviceRequired').valueChanges.subscribe(t => {
             this.toggleService(t);
@@ -390,12 +407,14 @@ export class QuestionSheetModel {
         });
     }
 
-    private getWhatWasDiscussed(): string {
-        const priceIncreaseFied = this.priceIncrease ? 'Price Increase' : null;
-        const spoilsFied = this.spoils ? 'Spoils' : null;
-        const loyaltyProgramFied = this.loyaltyProgram ? 'Loyalty Program' : null;
-        const otherFied = this.other ? 'Other' : null;
-        const result = [priceIncreaseFied, spoilsFied, loyaltyProgramFied, otherFied].filter(item => item !== null).join('\n');
+    private getPurposeForVisit(): string {
+        const priceIncrease = this.priceIncrease ? 'Price Increase' : null;
+        const addingServices = this.addingServices ? 'Adding Services' : null;
+        const serviceIssues = this.serviceIssues ? 'Service Issues' : null;
+        const followUp = this.followUp ? 'QC Follow Up' : null;
+        const marketConversion = this.marketConversion ? 'Market Conversion' : null;
+        const other = this.other ? 'Other' : null;
+        const result = [priceIncrease, addingServices, serviceIssues, followUp, marketConversion, other].filter(item => item !== null).join('\n');
         return result;
     }
 
@@ -426,7 +445,7 @@ export class QuestionSheetModel {
             item.equipment = this.equipment,
             item.routeDriver = this.routeDriver,
             item.variety = this.variety,
-            item.whatWasDiscussed = this.getWhatWasDiscussed(),
+            item.purposeForVisit = this.getPurposeForVisit(),
             item.opsNotes = this.opsNotes,
             item.vendMaxComments = this.vendMaxComments,
             item.formId = this._formId

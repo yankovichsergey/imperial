@@ -10,7 +10,7 @@ export class QuestionSheetContract {
     public equipment: string;
     public routeDriver: string;
     public variety: string;
-    public whatWasDiscussed: string;
+    public purposeForVisit: string;
     public service: string;
     public opsNotes: string;
     public vendMaxComments: string;

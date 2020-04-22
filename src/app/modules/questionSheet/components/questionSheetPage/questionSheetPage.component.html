@@ -1,7 +1,7 @@
 <div class="serv-okc">
     <div class="serv-okc-container">
         <div class="title-page-block">
-            <h1 class="title-page">OKC Serv Form</h1>
+            <h1 class="title-page">Internal Feedback Form</h1>
             <div class="logo"></div>
         </div>
         <div class="js-form-block form-block"
@@ -49,6 +49,7 @@
                            [nkSelectPrimaryKey]="'id'"
                            [appendTo]="'self'"
                            required
+                           [nkSelectCache]="false"
                            [nkSelectDataBindingMode]="'byDataSource'"
                            [nkSelectDataSource]="getSiteCollection"
                            [nkSelectFilterBy]="'siteDescription'">
@@ -90,6 +91,7 @@
                            (nkSelectOnChange)="onLocationSelect()"
                            [nkSelectPrimaryKey]="'id'"
                            [appendTo]="'self'"
+                           [nkSelectCache]="false"
                            [nkSelectDataBindingMode]="'byDataSource'"
                            [nkSelectDataSource]="getLocationCollection"
                            [nkSelectFilterBy]="'locationDescription'">
@@ -193,11 +195,13 @@
                 </div>
             </div>
             <div class="flex-box checkbox-block">
-                <label class="label-text inline-label label">What was discussed</label>
+                <label class="label-text inline-label label">Purpose for visit</label>
                 <div class="flex-box margin-bottom">
                     <mat-checkbox formControlName="priceIncrease">Price Increase</mat-checkbox>
-                    <mat-checkbox formControlName="spoils">Spoils</mat-checkbox>
-                    <mat-checkbox formControlName="loyaltyProgram">Loyalty Program</mat-checkbox>
+                    <mat-checkbox formControlName="addingServices">Adding Services</mat-checkbox>
+                    <mat-checkbox formControlName="serviceIssues">Service Issues</mat-checkbox>
+                    <mat-checkbox formControlName="followUp">QC Follow Up</mat-checkbox>
+                    <mat-checkbox formControlName="marketConversion">Market Conversion</mat-checkbox>
                     <mat-checkbox formControlName="other">Other</mat-checkbox>
                 </div>
             </div>
@@ -208,14 +212,14 @@
                           rows="3"></textarea>
             </div>
             <div class="flex-box">
-                <label class="label-text inline-label label">Vend Max Comments</label>
+                <label class="label-text inline-label label">Vendmax Comments</label>
                 <textarea class="textarea-form"
                           formControlName="vendMaxComments"
                           rows="3"></textarea>
             </div>
             <div class="flex-box">
                 <label class="label-text inline-label label">ID</label>
-                <div class="flex-box"><b>{{model.formId}}</b></div>
+                <div class="flex-box form-id"><b>{{model.formId}}</b></div>
             </div>
             <div class="flex-box">
                 <button class="form-button"

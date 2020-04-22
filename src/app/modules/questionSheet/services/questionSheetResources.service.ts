@@ -31,20 +31,16 @@ export class QuestionSheetResourcesService {
 
     public siteCollection(selector: any): Observable<any> {
         const data = new Observable((observer: any) => {
-            if (!this.sites) {
-                this.resourceTemplates.get(QuestionSheetResourceConstants.SITES, {})
-                    .subscribe(
-                        (response: any) => {
-                            this.sites = this.sitesResponseToCollection(response);
-                            observer.next(JSON.parse(JSON.stringify(this.sites)));
-                        },
-                        (error: any) => {
-                            observer.error(error);
-                        }
-                    );
-            } else {
-                observer.next(this.sites);
-            }
+            this.resourceTemplates.get(QuestionSheetResourceConstants.SITES, {})
+                .subscribe(
+                    (response: any) => {
+                        this.sites = this.sitesResponseToCollection(response);
+                        observer.next(JSON.parse(JSON.stringify(this.sites)));
+                    },
+                    (error: any) => {
+                        observer.error(error);
+                    }
+                );
         });
         return data;
     }

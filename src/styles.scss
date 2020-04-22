@@ -3,9 +3,12 @@
 @import "./src/app/content/css/variables/responsiveVariables.scss";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+html {
+    font-size: 12px;
+}
 body {
     margin: 0;
-    font-size: 12px;
+    font-size: 1rem;
 
     #wrap {
         overflow: auto;
@@ -18,7 +21,7 @@ body {
 }
 
 .h2 {
-    font-size: 19px;
+    font-size: 1.5rem;
     color: $colorBlackPale;
     margin: 0;
 }
@@ -61,7 +64,6 @@ body {
 
     .text-form {
         height: 26px;
-        min-width: 209px;
         border: 1px solid $colorGray4;
         border-radius: 3px;
         padding: 0 10px;
@@ -74,7 +76,7 @@ body {
 
     .label-text {
         color: $colorGray4;
-        font-size: 12px;
+        font-size: 1rem;
         padding: 5px 0;
     }
 }
@@ -203,27 +205,27 @@ body {
 .xs {
     .text-normal,
     .text-common {
-        font-size: 10px;
+        font-size: 0.9rem;
     }
 
     .text-common-bold {
-        font-size: 10px;
+        font-size: 0.9rem;
     }
 
     .text-sub-header,
     .text-bold {
-        font-size: 10px;
+        font-size: 0.9rem;
     }
 }
 
 .text-common-bold {
-    font-size: 12px;
+    font-size: 1rem;
     font-weight: bold;
 }
 
 .text-sub-header,
 .text-bold {
-    font-size: 12px;
+    font-size: 1rem;
     color: $colorBlack;
     font-weight: bold;
 }
@@ -242,7 +244,6 @@ body {
 
         .text-form {
             height: 26px;
-            min-width: 209px;
             border: 1px solid $colorGray4;
             border-radius: 3px;
             padding: 0 10px;
