@@ -318,7 +318,6 @@ export class QuestionSheetModel {
             index: null,
             values: collection
         };
-
         const contract = JSON.stringify(requestContract);
         return new Observable((observer: any) => {
             this.subscriptions.push(this.questionSheetResourcesService.save(contract).subscribe(
@@ -328,7 +327,6 @@ export class QuestionSheetModel {
                 error => observer.error(error)
             ));
         });
-
     }
 
     private generateUUID(): string {
@@ -383,28 +381,53 @@ export class QuestionSheetModel {
             equipment: new FormControl(),
             routeDriver: new FormControl(),
             variety: new FormControl(),
-
             priceIncrease: new FormControl(false),
             addingServices: new FormControl(false),
             serviceIssues: new FormControl(false),
             followUp: new FormControl(false),
             marketConversion: new FormControl(false),
             other: new FormControl(false),
-
             service: new FormControl(null),
             opsNotes: new FormControl(),
             vendMaxComments: new FormControl(),
             serviceRequired: new FormControl(false)
         });
-        this._form.get('serviceRequired').valueChanges.subscribe(t => {
+        this.subscriptions.push(this._form.get('serviceRequired').valueChanges.subscribe(t => {
             this.toggleService(t);
-        });
-        this._form.get('site').valueChanges.subscribe(value => {
+        }));
+        this.subscriptions.push(this._form.get('site').valueChanges.subscribe(value => {
             this.toggleDropdown(value, 'customer');
-        });
-        this._form.get('customer').valueChanges.subscribe(value => {
+        }));
+        this.subscriptions.push(this._form.get('customer').valueChanges.subscribe(value => {
             this.toggleDropdown(value, 'location');
-        });
+            this.resetCustomerAndLocation(value);
+
+        }));
+        this.subscriptions.push(this._form.get('location').valueChanges.subscribe(value => {
+            this.resetLocation(value);
+        }));
+    }
+
+    private resetCustomerAndLocation(value: string): void {
+        if (!value) {
+            this.locationName = null;
+            this.locationSourceId = null;
+            this.locationId = null;
+            this.locationCode = null;
+            this.customerName = null;
+            this.customerSourceId = null;
+            this.customerId = null;
+            this.customerCode = null;
+        }
+    }
+
+    private resetLocation(value: string): void {
+        if (!value) {
+            this.locationName = null;
+            this.locationSourceId = null;
+            this.locationId = null;
+            this.locationCode = null;
+        }
     }
 
     private getPurposeForVisit(): string {
