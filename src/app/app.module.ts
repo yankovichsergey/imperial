@@ -36,7 +36,15 @@ export const protectedResourceMap: [string, string[]][] = [
     ['https://graph.microsoft.com/v1.0/me', ['user.read']]
 ];
 
-const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
+export function isIE(): boolean {
+    const ua = window.navigator.userAgent;
+    const isMsie = ua.indexOf('MSIE ') > -1;
+    const isMsie11 = ua.indexOf('Trident/') > -1;
+    const isEdge = ua.indexOf('Edge/') > -1;
+    return isMsie || isMsie11 || isEdge;
+}
+
+// const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 function MSALConfigFactory(): Configuration {
     return {
@@ -50,14 +58,14 @@ function MSALConfigFactory(): Configuration {
         },
         cache: {
             cacheLocation: 'localStorage',
-            storeAuthStateInCookie: isIE,
+            storeAuthStateInCookie: isIE(),
         },
     };
 }
 
 function MSALAngularConfigFactory(): MsalAngularConfiguration {
     return {
-        popUp: !isIE,
+        popUp: !isIE(),
         consentScopes: [
             'user.read',
             'openid',
