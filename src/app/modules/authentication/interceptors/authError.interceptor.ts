@@ -33,7 +33,7 @@ export class AuthErrorInterceptor implements HttpInterceptor {
     }
 
     private logout(err: any): Observable<HttpEvent<any>> {
-        this.authenticationService.signOut();
+        // this.authenticationService.signOut();
         const queryParams = this.router.url.includes(AuthenticationResourceConstants.LOGIN_ROUTE) ? {} : { returnUrl: this.router.url };
         this.router.navigate([AuthenticationResourceConstants.LOGIN_ROUTE], { queryParams });
         return throwError(err);
