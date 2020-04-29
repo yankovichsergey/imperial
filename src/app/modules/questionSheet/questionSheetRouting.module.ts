@@ -6,12 +6,12 @@ import {
 import { MainLayoutComponent } from '../../layout/components/mainLayout/mainLayout.component';
 import { ThanksPageComponent } from './components/thanksPage';
 import { QuestionSheetPageComponent } from './components/questionSheetPage';
-import { MsalGuard } from '@azure/msal-angular';
+import { AuthGuard } from '../authentication/guards';
 
 const routes: Routes = [
     {
         path: 'serv-okc',
-        canActivate: [MsalGuard],
+        canActivate: [AuthGuard],
         component: MainLayoutComponent,
         children: [
             {
@@ -23,7 +23,7 @@ const routes: Routes = [
     },
     {
         path: 'thanks',
-        canActivate: [MsalGuard],
+        canActivate: [AuthGuard],
         component: MainLayoutComponent,
         children: [
             {

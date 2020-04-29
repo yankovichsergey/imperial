@@ -12,7 +12,10 @@ import {
     LayoutModule
 } from './layout';
 import { environment } from '../environments/environment';
-import { AuthErrorInterceptor, JwtInterceptor } from './modules/authentication/interceptors';
+import {
+    AuthErrorInterceptor,
+    JwtInterceptor
+} from './modules/authentication/interceptors';
 import {
     CashInterceptor,
     HttpRequestInterceptor
@@ -44,25 +47,25 @@ export const isMock = environment.mock;
         MsalModule
     ],
     providers: [
+        MsalService,
+        /* {
+             provide: HTTP_INTERCEPTORS,
+             useClass: MsalInterceptor,
+             multi: true
+         },*/
         {
-            provide: HTTP_INTERCEPTORS,
-            useClass: MsalInterceptor,
-            multi: true
-        },
-        /*{
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
             multi: true
-        },*/
-        {
-            provide: MSAL_CONFIG,
-            useFactory: ConfigAppHelper.MSALConfigFactory
         },
-        {
-            provide: MSAL_CONFIG_ANGULAR,
-            useFactory: ConfigAppHelper.MSALAngularConfigFactory
-        },
-        MsalService,
+        /* {
+             provide: MSAL_CONFIG,
+             useFactory: ConfigAppHelper.MSALConfigFactory
+         },
+         {
+             provide: MSAL_CONFIG_ANGULAR,
+             useFactory: ConfigAppHelper.MSALAngularConfigFactory
+         },*/
         {
             provide: HTTP_INTERCEPTORS,
             useClass: CashInterceptor,

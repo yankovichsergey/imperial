@@ -12,8 +12,6 @@ import { ConfigAppHelper } from './common/helpers';
 
 export class AppComponent implements OnInit {
 
-    public isIframe: boolean;
-
     constructor(
         private authService: AuthenticationService,
         private broadcastService: BroadcastService
@@ -21,11 +19,9 @@ export class AppComponent implements OnInit {
         if (!ConfigAppHelper.isIE()) {
             localStorage.clear();
         }
-        this.isIframe = false;
     }
 
     public ngOnInit(): void {
-        this.isIframe = window !== window.parent && !window.opener;
         this.authService.singIn();
         this.refresh();
     }
@@ -36,7 +32,7 @@ export class AppComponent implements OnInit {
 
     private refresh(): void {
         this.broadcastService.subscribe('msal:acquireTokenFailure', payload => {
-            // this.authService.refresh();
+            this.authService.refresh();
         });
     }
 }
