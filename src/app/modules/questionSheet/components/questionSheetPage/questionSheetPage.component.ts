@@ -117,7 +117,7 @@ export class QuestionSheetPageComponent implements OnDestroy {
         this.fillField();
         this.popupService.startRelativeLoading(this.selector);
         this.subscriptions.push(this.model.save().subscribe(() => {
-                this.router.navigate(['thanks'], {skipLocationChange: true});
+                this.router.navigate(['serv-okc/thanks'], {skipLocationChange: true});
                 this.popupService.breackRelativeLoading(this.selector);
             },
             (error: any) => {

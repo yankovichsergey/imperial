@@ -18,18 +18,16 @@ const routes: Routes = [
                 path: '',
                 component: QuestionSheetPageComponent,
                 data: {animation: 'QuestionSheetPage'}
-            }
-        ]
-    },
-    {
-        path: 'thanks',
-        canActivate: [AuthGuard],
-        component: MainLayoutComponent,
-        children: [
+            },
             {
-                path: '',
-                component: ThanksPageComponent,
-                data: {animation: 'ThanksPage'}
+                path: 'thanks',
+                children: [
+                    {
+                        path: '',
+                        component: ThanksPageComponent,
+                        data: {animation: 'ThanksPage'}
+                    }
+                ]
             }
         ]
     }
