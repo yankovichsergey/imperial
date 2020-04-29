@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
     constructor(
         private authService: AuthenticationService
     ) {
+        localStorage.clear();
         this.isIframe = false;
     }
 
