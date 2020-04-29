@@ -5,7 +5,6 @@ import { environment } from '../../../environments/environment';
 export class ConfigAppHelper {
 
     public static protectedResourceMap: [string, string[]][] = [
-        ['https://buildtodoservice.azurewebsites.net/api/todolist', [environment.apiAccessUrl]],
         ['https://graph.microsoft.com/v1.0/me', ['user.read']]
     ];
 
@@ -41,21 +40,15 @@ export class ConfigAppHelper {
                 'user.read',
                 'openid',
                 'profile',
-                'offline_access',
                 'files.read',
                 'files.readWrite',
                 'files.readWrite.all',
-                'sites.readWrite.all',
-                'sites.Read.All',
-                'user.readBasic.all',
                 'files.readWrite.appFolder',
                 environment.apiAccessUrl
             ],
             unprotectedResources: ['https://www.microsoft.com/en-us/'],
             protectedResourceMap: ConfigAppHelper.protectedResourceMap,
-            extraQueryParameters: {
-                redirectUri: environment.redirectUri
-            }
+            extraQueryParameters: {}
         };
     }
 }
