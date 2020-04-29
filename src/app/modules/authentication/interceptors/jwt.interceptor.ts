@@ -35,17 +35,16 @@ export class JwtInterceptor implements HttpInterceptor {
         }
         return next.handle(request).pipe(catchError(error => {
             if (error instanceof HttpErrorResponse &&
-                (error.status === 401 || error.status === 403) &&
-                request.url !== AuthenticationResourceConstants.USER_REFRESH &&
-                request.url !== AuthenticationResourceConstants.USER_AUTHENTICATE) {
+                (error.status === 401 || error.status === 403)) {
+                this.authenticationService.refresh();
                 // return this.handle401Error(request, next);
             } else
-                if (request.url === AuthenticationResourceConstants.USER_REFRESH) {
-                    this.isRefreshing = false;
-                    return throwError(error);
-                } else {
-                    return throwError(error);
-                }
+            if (request.url === AuthenticationResourceConstants.USER_REFRESH) {
+                this.isRefreshing = false;
+                return throwError(error);
+            } else {
+                return throwError(error);
+            }
         }));
     }
 
