@@ -26,7 +26,8 @@ export class JwtInterceptor implements HttpInterceptor {
     private isRefreshing = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    constructor(private authenticationService: AuthenticationService) { }
+    constructor(private authenticationService: AuthenticationService) {
+    }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const loggedIn = this.authenticationService.getToken();
@@ -34,14 +35,8 @@ export class JwtInterceptor implements HttpInterceptor {
             request = this.addToken(request, loggedIn);
         }
         return next.handle(request).pipe(catchError(error => {
-            if (error instanceof HttpErrorResponse &&
-                (error.status === 401 || error.status === 403)) {
-                this.authenticationService.refresh();
-                // return this.handle401Error(request, next);
-            } else
-            if (request.url === AuthenticationResourceConstants.USER_REFRESH) {
-                this.isRefreshing = false;
-                return throwError(error);
+            if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 403)) {
+                return this.handle401Error(request, next);
             } else {
                 return throwError(error);
             }
@@ -56,14 +51,14 @@ export class JwtInterceptor implements HttpInterceptor {
         });
     }
 
-    /*private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+    private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
         if (!this.isRefreshing) {
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
             return this.authenticationService.refresh().pipe(
                 switchMap((isSign: boolean) => {
                     this.isRefreshing = false;
-                    let token = this.authenticationService.getToken();
+                    const token = this.authenticationService.getToken();
                     this.refreshTokenSubject.next(token);
                     return next.handle(this.addToken(request, token));
                 }));
@@ -76,5 +71,5 @@ export class JwtInterceptor implements HttpInterceptor {
                     return next.handle(this.addToken(request, jwt));
                 }));
         }
-    }*/
+    }
 }

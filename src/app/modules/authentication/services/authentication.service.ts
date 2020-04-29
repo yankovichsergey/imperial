@@ -70,7 +70,7 @@ export class AuthenticationService {
         this.msalInstance.logout();
     }
 
-    public refresh(): void {
+    /*public refresh(): void {
         if (this.msalInstance.getAccount()) {
             this.msalInstance.acquireTokenSilent(this.getLoginRequest())
                 .then(response => {
@@ -89,6 +89,22 @@ export class AuthenticationService {
                 });
         } else {
             this.msalInstance.logout();
+        }
+    }*/
+
+    public refresh(): Observable<any> {
+        if (this.msalInstance.getAccount()) {
+            return new Observable((observer: any) => {
+                this.msalInstance.acquireTokenSilent(this.getLoginRequest())
+                    .then(response => {
+                        localStorage.setItem('access_token', response.accessToken);
+                        observer.next(response.accessToken);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        observer.next(err);
+                    });
+            });
         }
     }
 
