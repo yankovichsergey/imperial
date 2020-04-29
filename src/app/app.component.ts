@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
 
     private refresh(): void {
         this.broadcastService.subscribe('msal:acquireTokenFailure', payload => {
-            console.log(payload);
+            this.authService.refresh();
         });
     }
 }

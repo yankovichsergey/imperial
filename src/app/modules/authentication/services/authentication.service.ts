@@ -6,6 +6,7 @@ import {
     Logger
 } from 'msal';
 import { MsalService } from '@azure/msal-angular';
+import { environment } from '../../../../environments/environment';
 
 
 @Injectable({
@@ -39,6 +40,21 @@ export class AuthenticationService {
 
     public signOut(): void {
         this.msalService.logout();
+    }
+
+    public refresh(): void {
+        this.msalService.acquireTokenSilent({
+            scopes: [
+                'user.read',
+                'openid',
+                'profile',
+                'files.read',
+                'files.readWrite',
+                'files.readWrite.all',
+                'files.readWrite.appFolder',
+                environment.apiAccessUrl
+            ]
+        });
     }
 
     public getToken(): string {
