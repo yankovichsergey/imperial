@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_TRANSITION } from '@appConstants';
 import { AuthenticationService } from './modules/authentication/services/authentication.service';
+import { ConfigAppHelper } from './common/helpers';
 
 @Component({
     selector: 'app-root',
@@ -15,7 +16,9 @@ export class AppComponent implements OnInit {
     constructor(
         private authService: AuthenticationService
     ) {
-        localStorage.clear();
+        if (!ConfigAppHelper.isIE()) {
+            localStorage.clear();
+        }
         this.isIframe = false;
     }
 
