@@ -1,26 +1,29 @@
 import {
-  NgModule } from '@angular/core';
+    NgModule
+} from '@angular/core';
 import {
-  Routes,
-  RouterModule,
-  PreloadAllModules
+    Routes,
+    RouterModule,
+    PreloadAllModules
 } from '@angular/router';
 import { QuestionSheetResourceConstants } from './modules/questionSheet/constants';
 
 const routes: Routes = [
-   { path: '',   redirectTo: QuestionSheetResourceConstants.SERV_OKC_ROUTE, pathMatch: 'full' },
-   { path: '**', redirectTo: '' }
+    {path: '', redirectTo: QuestionSheetResourceConstants.SERV_OKC_ROUTE, pathMatch: 'full'},
+    {path: '**', redirectTo: ''}
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(
-      routes,
-      ({
-          preloadingStrategy: PreloadAllModules,
-          enableTracing: false
-      }))
-  ],
-  exports: [RouterModule]
+    imports: [
+        RouterModule.forRoot(
+            routes,
+            ({
+                useHash: false,
+                preloadingStrategy: PreloadAllModules,
+                enableTracing: false
+            }))
+    ],
+    exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

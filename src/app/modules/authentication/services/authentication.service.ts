@@ -20,6 +20,7 @@ export class AuthenticationService {
     }
 
     public singIn(): void {
+
         this.msalService.handleRedirectCallback((authError, response) => {
             if (authError) {
                 console.error('Redirect Error: ', authError.errorMessage);
@@ -38,6 +39,10 @@ export class AuthenticationService {
 
     public signOut(): void {
         this.msalService.logout();
+    }
+
+    public redirect(): void {
+        this.msalService.loginRedirect();
     }
 
     public getToken(): string {

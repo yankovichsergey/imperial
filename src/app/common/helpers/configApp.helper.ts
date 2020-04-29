@@ -53,7 +53,9 @@ export class ConfigAppHelper {
             ],
             unprotectedResources: ['https://www.microsoft.com/en-us/'],
             protectedResourceMap: ConfigAppHelper.protectedResourceMap,
-            extraQueryParameters: {}
+            extraQueryParameters: {
+                redirectUri: environment.redirectUri
+            }
         };
     }
 }
