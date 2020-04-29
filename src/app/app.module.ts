@@ -22,69 +22,13 @@ import { developmentFakeBackendProvider } from './common/interceptors/developmen
 import {
     MSAL_CONFIG,
     MSAL_CONFIG_ANGULAR,
-    MsalAngularConfiguration,
     MsalInterceptor,
     MsalModule,
     MsalService
 } from '@azure/msal-angular';
-import { Configuration } from 'msal';
+import { ConfigAppHelper } from './common/helpers';
 
 export const isMock = environment.mock;
-
-export const protectedResourceMap: [string, string[]][] = [
-    ['https://buildtodoservice.azurewebsites.net/api/todolist', [environment.apiAccessUrl]],
-    ['https://graph.microsoft.com/v1.0/me', ['user.read']]
-];
-
-export function isIE(): boolean {
-    const ua = window.navigator.userAgent;
-    const isMsie = ua.indexOf('MSIE ') > -1;
-    const isMsie11 = ua.indexOf('Trident/') > -1;
-    const isEdge = ua.indexOf('Edge/') > -1;
-    return isMsie || isMsie11 || isEdge;
-}
-
-// const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
-
-function MSALConfigFactory(): Configuration {
-    return {
-        auth: {
-            clientId: environment.clientId,
-            authority: environment.authority,
-            validateAuthority: true,
-            redirectUri: environment.redirectUri,
-            postLogoutRedirectUri: environment.postLogoutRedirectUri,
-            navigateToLoginRequestUrl: true,
-        },
-        cache: {
-            cacheLocation: 'localStorage',
-            storeAuthStateInCookie: isIE(),
-        },
-    };
-}
-
-function MSALAngularConfigFactory(): MsalAngularConfiguration {
-    return {
-        popUp: !isIE(),
-        consentScopes: [
-            'user.read',
-            'openid',
-            'profile',
-            'offline_access',
-            'files.read',
-            'files.readWrite',
-            'files.readWrite.all',
-            'sites.readWrite.all',
-            'sites.Read.All',
-            'user.readBasic.all',
-            'files.readWrite.appFolder',
-            environment.apiAccessUrl
-        ],
-        unprotectedResources: ['https://www.microsoft.com/en-us/'],
-        protectedResourceMap,
-        extraQueryParameters: {}
-    };
-}
 
 @NgModule({
     declarations: [
@@ -112,11 +56,11 @@ function MSALAngularConfigFactory(): MsalAngularConfiguration {
         },*/
         {
             provide: MSAL_CONFIG,
-            useFactory: MSALConfigFactory
+            useFactory: ConfigAppHelper.MSALConfigFactory
         },
         {
             provide: MSAL_CONFIG_ANGULAR,
-            useFactory: MSALAngularConfigFactory
+            useFactory: ConfigAppHelper.MSALAngularConfigFactory
         },
         MsalService,
         {

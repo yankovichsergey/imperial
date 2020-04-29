@@ -1,8 +1,11 @@
 import { Observable } from 'rxjs';
-import { ResourceTemplatesService } from '@appServices';
-import { QuestionSheetResourceConstants } from '../constants/index';
 import { Injectable } from '@angular/core';
 import { mergeMap } from 'rxjs/operators';
+import { ResourceTemplatesService } from '@appServices';
+import {
+    QuestionSheetNameConstant,
+    QuestionSheetResourceConstants
+} from '../constants/index';
 
 @Injectable()
 export class QuestionSheetResourcesService {
@@ -10,6 +13,7 @@ export class QuestionSheetResourcesService {
     private locations: Array<any>;
     private customers: Array<any>;
     private sites: Array<any>;
+    private dropdownSheetId: string;
 
     constructor(
         private resourceTemplates: ResourceTemplatesService) {
@@ -30,25 +34,29 @@ export class QuestionSheetResourcesService {
     }
 
     public siteCollection(selector: any): Observable<any> {
-        const data = new Observable((observer: any) => {
-            this.resourceTemplates.get(QuestionSheetResourceConstants.SITES, {})
-                .subscribe(
-                    (response: any) => {
-                        this.sites = this.sitesResponseToCollection(response);
-                        observer.next(JSON.parse(JSON.stringify(this.sites)));
-                    },
-                    (error: any) => {
-                        observer.error(error);
-                    }
-                );
+        return new Observable((observer: any) => {
+            this.resourceTemplates.get(QuestionSheetResourceConstants.GET_FILE_FROM_FOLDER, {})
+                .pipe(
+                    mergeMap((item: any) => {
+                        this.dropdownSheetId = this.getDropdownSheetId(item.value);
+                        return this.resourceTemplates.get(QuestionSheetResourceConstants.SITES.replace('{sheetId}', this.dropdownSheetId), {});
+                    })
+                ).subscribe(
+                (response: any) => {
+                    this.sites = this.sitesResponseToCollection(response);
+                    observer.next(JSON.parse(JSON.stringify(this.sites)));
+                },
+                (error: any) => {
+                    observer.error(error);
+                }
+            );
         });
-        return data;
     }
 
     public customerCollection(selector: any): Observable<any> {
         const data = new Observable((observer: any) => {
             if (!this.customers) {
-                this.resourceTemplates.get(QuestionSheetResourceConstants.CUSTOMERS, {})
+                this.resourceTemplates.get(QuestionSheetResourceConstants.CUSTOMERS.replace('{sheetId}', this.dropdownSheetId), {})
                     .subscribe(
                         (response: any) => {
                             this.customers = this.customersResponseToCollection(response);
@@ -68,7 +76,7 @@ export class QuestionSheetResourcesService {
     public locationCollection(selector: any): Observable<any> {
         const data = new Observable((observer: any) => {
             if (!this.locations) {
-                this.resourceTemplates.get(QuestionSheetResourceConstants.LOCATIONS, {})
+                this.resourceTemplates.get(QuestionSheetResourceConstants.LOCATIONS.replace('{sheetId}', this.dropdownSheetId), {})
                     .subscribe(
                         (response: any) => {
                             this.locations = this.locationResponseToCollection(response);
@@ -171,6 +179,10 @@ export class QuestionSheetResourcesService {
         }
 
         return JSON.parse(JSON.stringify(result));
+    }
+
+    private getDropdownSheetId(value: Array<any>): string {
+        return value.find(item => item.name === QuestionSheetNameConstant.DROPDOWN_SHEET).id;
     }
 
 }
