@@ -28,7 +28,7 @@ export class ConfigAppHelper {
             },
             cache: {
                 cacheLocation: 'localStorage',
-                storeAuthStateInCookie: ConfigAppHelper.isIE(),
+                storeAuthStateInCookie: true,
             },
         };
     }
