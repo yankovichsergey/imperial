@@ -41,10 +41,6 @@ export class AuthenticationService {
         this.msalService.logout();
     }
 
-    public redirect(): void {
-        this.msalService.loginRedirect();
-    }
-
     public getToken(): string {
         const token = localStorage.getItem('msal.idtoken');
         return token;
