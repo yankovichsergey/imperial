@@ -22,14 +22,6 @@ import {
 } from './common/interceptors';
 import { FakeBackendInterceptor } from 'src/testing';
 import { developmentFakeBackendProvider } from './common/interceptors/developmentFakeBackend.interceptor';
-import {
-    MSAL_CONFIG,
-    MSAL_CONFIG_ANGULAR,
-    MsalInterceptor,
-    MsalModule,
-    MsalService
-} from '@azure/msal-angular';
-import { ConfigAppHelper } from './common/helpers';
 
 export const isMock = environment.mock;
 
@@ -43,29 +35,14 @@ export const isMock = environment.mock;
         HttpClientModule,
         LayoutModule,
         ApplicationModule,
-        AppRoutingModule,
-        MsalModule
+        AppRoutingModule
     ],
     providers: [
-        MsalService,
-        /* {
-             provide: HTTP_INTERCEPTORS,
-             useClass: MsalInterceptor,
-             multi: true
-         },*/
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
             multi: true
         },
-        /* {
-             provide: MSAL_CONFIG,
-             useFactory: ConfigAppHelper.MSALConfigFactory
-         },
-         {
-             provide: MSAL_CONFIG_ANGULAR,
-             useFactory: ConfigAppHelper.MSALAngularConfigFactory
-         },*/
         {
             provide: HTTP_INTERCEPTORS,
             useClass: CashInterceptor,

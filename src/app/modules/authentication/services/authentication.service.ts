@@ -6,11 +6,6 @@ import {
     Subject
 } from 'rxjs';
 import * as Msal from 'msal';
-import {
-    CryptoUtils,
-    Logger
-} from 'msal';
-// import { MsalService } from '@azure/msal-angular';
 import { environment } from '../../../../environments/environment';
 
 
@@ -27,9 +22,7 @@ export class AuthenticationService {
         return this.subject.asObservable();
     }
 
-    constructor(
-        // private msalService: MsalService
-    ) {
+    constructor() {
         const msalConfig = {
             auth: {
                 clientId: environment.clientId,
@@ -52,48 +45,11 @@ export class AuthenticationService {
         }).catch(err => {
             console.log(err);
         });
-
-        // this.msalService.handleRedirectCallback((authError, response) => {
-        //     if (authError) {
-        //         console.error('Redirect Error: ', authError.errorMessage);
-        //         return;
-        //     }
-        //     console.log('Redirect Success: ', response);
-        // });
-        //
-        // this.msalService.setLogger(new Logger((logLevel, message, piiEnabled) => {
-        //     console.log('MSAL Logging: ', message);
-        // }, {
-        //     correlationId: CryptoUtils.createNewGuid(),
-        //     piiLoggingEnabled: false
-        // }));
     }
 
     public signOut(): void {
         this.msalInstance.logout();
     }
-
-    /*public refresh(): void {
-        if (this.msalInstance.getAccount()) {
-            this.msalInstance.acquireTokenSilent(this.getLoginRequest())
-                .then(response => {
-                    localStorage.setItem('access_token', response.accessToken);
-                })
-                .catch(error => {
-                    if (error.name === 'InteractionRequiredAuthError') {
-                        return this.msalInstance.acquireTokenPopup(this.getLoginRequest())
-                            .then(response => {
-                                localStorage.setItem('access_token', response.accessToken);
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    }
-                });
-        } else {
-            this.msalInstance.logout();
-        }
-    }*/
 
     public refresh(): Observable<any> {
         const isAccount = this.msalInstance.getAccount();
