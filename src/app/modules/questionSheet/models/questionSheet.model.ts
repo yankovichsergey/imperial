@@ -320,12 +320,12 @@ export class QuestionSheetModel {
         };
         const contract = JSON.stringify(requestContract);
         return new Observable((observer: any) => {
-            this.subscriptions.push(this.questionSheetResourcesService.save(contract).subscribe(
-                (response) => {
-                    observer.next(response);
-                },
-                error => observer.error(error)
-            ));
+             this.subscriptions.push(this.questionSheetResourcesService.save(contract).subscribe(
+                 (response) => {
+                     observer.next(response);
+                 },
+                 error => observer.error(error)
+             ));
         });
     }
 
@@ -392,6 +392,10 @@ export class QuestionSheetModel {
             vendMaxComments: new FormControl(),
             serviceRequired: new FormControl(false)
         });
+        this.formSubscriptions();
+    }
+
+    private formSubscriptions(): void {
         this.subscriptions.push(this._form.get('serviceRequired').valueChanges.subscribe(t => {
             this.toggleService(t);
         }));
@@ -410,10 +414,7 @@ export class QuestionSheetModel {
 
     private resetCustomerAndLocation(value: string): void {
         if (!value) {
-            this.locationName = null;
-            this.locationSourceId = null;
-            this.locationId = null;
-            this.locationCode = null;
+            this.resetLocation(value);
             this.customerName = null;
             this.customerSourceId = null;
             this.customerId = null;

@@ -6,7 +6,10 @@ import {
     RouterStateSnapshot
 } from '@angular/router';
 import { AuthenticationService } from '../services';
-import { Observable, Subscriber } from 'rxjs';
+import {
+    Observable,
+    Subscriber
+} from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -18,7 +21,7 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return new Observable((observable: Subscriber<boolean>) => {
-            this.authenticationService.userToken$.subscribe((isToken: string) => {
+            this.authenticationService.userToken.subscribe((isToken: string) => {
                 if (!isToken) {
                     observable.next(false);
                 }

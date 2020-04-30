@@ -2,13 +2,16 @@ import {
     Injectable
 } from '@angular/core';
 import {
+    Observable,
+    Subject
+} from 'rxjs';
+import * as Msal from 'msal';
+import {
     CryptoUtils,
     Logger
 } from 'msal';
 // import { MsalService } from '@azure/msal-angular';
 import { environment } from '../../../../environments/environment';
-import { Observable, Subject } from 'rxjs';
-import * as Msal from 'msal';
 
 
 @Injectable({
@@ -20,7 +23,7 @@ export class AuthenticationService {
     private msalInstance: any;
     private subject: Subject<any>;
 
-    public get userToken$(): Observable<string> {
+    public get userToken(): Observable<string> {
         return this.subject.asObservable();
     }
 
@@ -93,7 +96,8 @@ export class AuthenticationService {
     }*/
 
     public refresh(): Observable<any> {
-        if (this.msalInstance.getAccount()) {
+        const isAccount = this.msalInstance.getAccount();
+        if (isAccount) {
             return new Observable((observer: any) => {
                 this.msalInstance.acquireTokenSilent(this.getLoginRequest())
                     .then(response => {
@@ -101,7 +105,6 @@ export class AuthenticationService {
                         observer.next(response.accessToken);
                     })
                     .catch(err => {
-                        console.log(err);
                         observer.next(err);
                     });
             });

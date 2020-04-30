@@ -6,7 +6,7 @@ import {
     HttpInterceptor
 } from '@angular/common/http';
 import {
-    Observable, of,
+    Observable,
     throwError
 } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -25,9 +25,9 @@ export class AuthErrorInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
-            if (err.status === 403 || err.status === 404) {
+            if (err.status === 404) {
                 return this.logout(err);
-            } else if (err.status === 401) {
+            } else if (err.status === 401 || err.status === 403) {
                 return throwError(err);
             } else {
                 return throwError(err);
