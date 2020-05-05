@@ -180,6 +180,6 @@ export class QuestionSheetPageComponent implements OnDestroy {
     }
 
     private fillField(): void {
-        this.model.date = this.decimalPipe.transform(this.model.servOkcDate, 'yyyy-MM-dd hh:mm:ss');
+        this.model.date = this.decimalPipe.transform(this.model.servOkcDate, 'yyyy-MM-dd hh:mm:ss a');
     }
 }
