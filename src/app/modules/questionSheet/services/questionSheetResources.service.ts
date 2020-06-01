@@ -5,7 +5,7 @@ import { ResourceTemplatesService } from '@appServices';
 import {
     QuestionSheetNameConstant,
     QuestionSheetResourceConstants
-} from '../constants/index';
+} from '../constants';
 
 @Injectable()
 export class QuestionSheetResourcesService {
@@ -14,6 +14,7 @@ export class QuestionSheetResourcesService {
     private customers: Array<any>;
     private sites: Array<any>;
     private dropdownSheetId: string;
+    private resultSheetId: string;
 
     constructor(
         private resourceTemplates: ResourceTemplatesService) {
@@ -21,14 +22,14 @@ export class QuestionSheetResourcesService {
 
     public save(contract: any): Observable<any> {
         const data = new Observable((observer: any) => {
-            this.resourceTemplates.post(QuestionSheetResourceConstants.SAVE, contract).subscribe(
-                (response: any) => {
-                    observer.next(response);
-                },
-                (error: any) => {
-                    observer.error(error);
-                }
-            );
+            this.resourceTemplates.post(QuestionSheetResourceConstants.SAVE.replace('{sheetId}', this.resultSheetId), contract)
+                .subscribe((response: any) => {
+                        observer.next(response);
+                    },
+                    (error: any) => {
+                        observer.error(error);
+                    }
+                );
         });
         return data;
     }
@@ -39,6 +40,7 @@ export class QuestionSheetResourcesService {
                 .pipe(
                     mergeMap((item: any) => {
                         this.dropdownSheetId = this.getDropdownSheetId(item.value);
+                        this.resultSheetId = this.getResultSheetId(item.value);
                         return this.resourceTemplates.get(QuestionSheetResourceConstants.SITES.replace('{sheetId}', this.dropdownSheetId), {});
                     })
                 ).subscribe(
@@ -183,6 +185,10 @@ export class QuestionSheetResourcesService {
 
     private getDropdownSheetId(value: Array<any>): string {
         return value.find(item => item.name === QuestionSheetNameConstant.DROPDOWN_SHEET).id;
+    }
+
+    private getResultSheetId(value: Array<any>): string {
+        return value.find(item => item.name === QuestionSheetNameConstant.RESULT_SHEET).id;
     }
 
 }

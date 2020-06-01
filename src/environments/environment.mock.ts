@@ -13,8 +13,6 @@ export const environment = {
     clientId: '58f8afe9-ab33-4302-8b19-cc7489edc841',
     redirectUri: 'https://yankovichsergey.github.io/imperialTest/serv-okc',
     postLogoutRedirectUri: 'https://yankovichsergey.github.io/imperialTest/serv-okc',
-    dropdownSheetId: '840667FF0B20A850!298',
-    resultSheetId: '840667FF0B20A850!139',
     folderId: '840667FF0B20A850!103',
     driveId: '840667ff0b20a850'
 };

@@ -19,9 +19,7 @@ export const environment = {
   redirectUri: 'https://yankovichsergey.github.io/imperialTest/serv-okc',
   postLogoutRedirectUri: 'https://yankovichsergey.github.io/imperialTest/serv-okc',
   driveId: keys.driveId,
-  dropdownSheetId: keys.dropdownSheetId,
-  folderId: keys.folderId,
-  resultSheetId: keys.resultSheetId
+  folderId: keys.folderId
 };
 
 
