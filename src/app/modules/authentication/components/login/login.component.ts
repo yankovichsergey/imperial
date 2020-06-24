@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
         });
 
         this.authenticationService.logout();
-        this.returnUrl = this.route.snapshot.queryParams.returnUrl || QuestionSheetResourceConstants.SERV_OKC_ROUTE;
+        this.returnUrl = this.route.snapshot.queryParams.returnUrl || QuestionSheetResourceConstants.HOME_PAGE_ROUTE;
     }
 
     get f() { return this.loginForm.controls; }

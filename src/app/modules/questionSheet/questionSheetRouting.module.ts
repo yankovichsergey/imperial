@@ -10,7 +10,7 @@ import { AuthGuard } from '../authentication/guards';
 
 const routes: Routes = [
     {
-        path: 'serv-okc',
+        path: '',
         canActivate: [AuthGuard],
         component: MainLayoutComponent,
         children: [

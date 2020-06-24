@@ -1,4 +1,7 @@
 {
   "folderId": "181475C0D66C80E9!111",
-  "driveId": "181475C0D66C80E9"
+  "driveId": "181475C0D66C80E9",
+  "clientId": "be9b8807-636a-4d6d-ae67-ad1daea11940",
+  "redirectUri": "https://yankovichsergey.github.io/imperialTest",
+  "postLogoutRedirectUri": "https://yankovichsergey.github.io/imperialTest"
 }

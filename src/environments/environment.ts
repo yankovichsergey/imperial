@@ -1,9 +1,9 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-import *  as  googleApi from 'src/assets/dev-microsoft-api.json';
+import *  as  microsoftApi from 'src/assets/dev-microsoft-api.json';
 
-const keys: any = (googleApi as any).default;
+const keys: any = (microsoftApi as any).default;
 
 export const environment = {
     production: false,
@@ -18,11 +18,11 @@ export const environment = {
     },
     authority: 'https://login.microsoftonline.com/common/',
     apiAccessUrl: 'api://58f8afe9-ab33-4302-8b19-cc7489edc841/api-access',
-    clientId: '58f8afe9-ab33-4302-8b19-cc7489edc841',
-    redirectUri: 'https://yankovichsergey.github.io/imperialTest/serv-okc',
-    postLogoutRedirectUri: 'https://yankovichsergey.github.io/imperialTest/serv-okc',
+    clientId: keys.clientId,
+    redirectUri: keys.redirectUri,
+    postLogoutRedirectUri: keys.postLogoutRedirectUri,
     driveId: keys.driveId,
-    folderId: keys.folderId
+    folderId: keys.folderId,
 };
 
 

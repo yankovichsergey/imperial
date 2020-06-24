@@ -1,3 +1,7 @@
+import *  as  microsoftApi from 'src/assets/dev-microsoft-api.json';
+
+const keys: any = (microsoftApi as any).default;
+
 export const environment = {
     production: true,
     mock: true,
@@ -10,9 +14,9 @@ export const environment = {
     },
     authority: 'https://login.microsoftonline.com/common/',
     apiAccessUrl: 'api://58f8afe9-ab33-4302-8b19-cc7489edc841/api-access',
-    clientId: '58f8afe9-ab33-4302-8b19-cc7489edc841',
-    redirectUri: 'https://yankovichsergey.github.io/imperialTest/serv-okc',
-    postLogoutRedirectUri: 'https://yankovichsergey.github.io/imperialTest/serv-okc',
-    folderId: '840667FF0B20A850!103',
-    driveId: '840667ff0b20a850'
+    clientId: keys.clientId,
+    redirectUri: keys.redirectUri,
+    postLogoutRedirectUri: keys.postLogoutRedirectUri,
+    driveId: keys.driveId,
+    folderId: keys.folderId,
 };

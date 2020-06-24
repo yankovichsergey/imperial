@@ -10,35 +10,23 @@ import {
     throwError
 } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthenticationService } from '../services';
-import {
-    Router
-} from '@angular/router';
-import { AuthenticationResourceConstants } from '../constants';
+import * as alertify from 'alertifyjs';
 
 @Injectable()
 export class AuthErrorInterceptor implements HttpInterceptor {
-    constructor(
-        private router: Router,
-        private authenticationService: AuthenticationService) {
+    constructor() {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
             if (err.status === 404) {
-                return this.logout(err);
+                alertify.error(err.error.error.message);
+                return throwError(err);
             } else if (err.status === 401 || err.status === 403) {
                 return throwError(err);
             } else {
                 return throwError(err);
             }
         }));
-    }
-
-    private logout(err: any): Observable<HttpEvent<any>> {
-        // this.authenticationService.signOut();
-        const queryParams = this.router.url.includes(AuthenticationResourceConstants.LOGIN_ROUTE) ? {} : {returnUrl: this.router.url};
-        this.router.navigate([AuthenticationResourceConstants.LOGIN_ROUTE], {queryParams});
-        return throwError(err);
     }
 }

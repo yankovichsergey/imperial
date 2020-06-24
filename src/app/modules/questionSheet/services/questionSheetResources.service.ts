@@ -15,9 +15,11 @@ export class QuestionSheetResourcesService {
     private sites: Array<any>;
     private dropdownSheetId: string;
     private resultSheetId: string;
+    private sheetName: string;
 
     constructor(
-        private resourceTemplates: ResourceTemplatesService) {
+        private resourceTemplates: ResourceTemplatesService
+    ) {
     }
 
     public save(contract: any): Observable<any> {
@@ -56,41 +58,37 @@ export class QuestionSheetResourcesService {
     }
 
     public customerCollection(selector: any): Observable<any> {
+        this.sheetName = this.sites.filter(item => item.siteSourceId === selector.siteSourceId)[0].customerSheetName;
+        const url = QuestionSheetResourceConstants.CUSTOMERS.replace('{sheetId}', this.dropdownSheetId).replace('{sheetName}', this.sheetName);
+        console.log(this.sheetName);
         const data = new Observable((observer: any) => {
-            if (!this.customers) {
-                this.resourceTemplates.get(QuestionSheetResourceConstants.CUSTOMERS.replace('{sheetId}', this.dropdownSheetId), {})
-                    .subscribe(
-                        (response: any) => {
-                            this.customers = this.customersResponseToCollection(response);
-                            observer.next(this.filterCustomers(selector.siteSourceId));
-                        },
-                        (error: any) => {
-                            observer.error(error);
-                        }
-                    );
-            } else {
-                observer.next(this.filterCustomers(selector.siteSourceId));
-            }
+            this.resourceTemplates.get(url, {})
+                .subscribe(
+                    (response: any) => {
+                        this.customers = this.customersResponseToCollection(response);
+                        observer.next(this.filterCustomers(selector.siteSourceId));
+                    },
+                    (error: any) => {
+                        observer.error(error);
+                    }
+                );
         });
         return data;
     }
 
     public locationCollection(selector: any): Observable<any> {
+        const url = QuestionSheetResourceConstants.LOCATIONS.replace('{sheetId}', this.dropdownSheetId).replace('{sheetName}', this.sheetName);
         const data = new Observable((observer: any) => {
-            if (!this.locations) {
-                this.resourceTemplates.get(QuestionSheetResourceConstants.LOCATIONS.replace('{sheetId}', this.dropdownSheetId), {})
-                    .subscribe(
-                        (response: any) => {
-                            this.locations = this.locationResponseToCollection(response);
-                            observer.next(this.filterLocation(selector));
-                        },
-                        (error: any) => {
-                            observer.error(error);
-                        }
-                    );
-            } else {
-                observer.next(this.filterLocation(selector));
-            }
+            this.resourceTemplates.get(url, {})
+                .subscribe(
+                    (response: any) => {
+                        this.locations = this.locationResponseToCollection(response);
+                        observer.next(this.filterLocation(selector));
+                    },
+                    (error: any) => {
+                        observer.error(error);
+                    }
+                );
         });
         return data;
     }
@@ -99,31 +97,12 @@ export class QuestionSheetResourcesService {
         const contract = {
             item: {
                 '@odata.type': 'microsoft.graph.driveItemUploadableProperties',
-                '@microsoft.graph.conflictBehavior': 'replace',
+                '@microsoft.graph.conflictBehavior': 'rename',
                 name: data.name
             }
         };
         return this.resourceTemplates.post(QuestionSheetResourceConstants.UPLOAD_FILE_BY_SESSION.replace('{fileName}', data.name), contract)
             .pipe(mergeMap(item => this.resourceTemplates.put(item.uploadUrl, data)));
-    }
-
-    private locationResponseToCollection(response: any): Array<any> {
-        return (response.values as Array<any>)
-            .map((t: Array<any>) => {
-                return {
-                    id: t[4] + t[5],
-                    name: t[6] + ' ' + t[7],
-                    customerSourceId: t[0],
-                    customerId: t[1],
-                    locationSourceId: t[4],
-                    locationId: t[5],
-                    locationCode: t[6],
-                    locationDescription: t[7]
-                };
-            })
-            .filter((item, index, self) => {
-                return item.id !== '' && index === self.findIndex(t => (t.id === item.id));
-            });
     }
 
     private sitesResponseToCollection(response: any): Array<any> {
@@ -135,7 +114,8 @@ export class QuestionSheetResourcesService {
                     siteId: t[0],
                     siteDescription: t[1],
                     siteCode: t[2],
-                    siteSourceId: t[3]
+                    siteSourceId: t[3],
+                    customerSheetName: t[4]
                 };
             })
             .filter((item, index, self) => {
@@ -161,10 +141,29 @@ export class QuestionSheetResourcesService {
             });
     }
 
+    private locationResponseToCollection(response: any): Array<any> {
+        return (response.values as Array<any>)
+            .map((t: Array<any>) => {
+                return {
+                    id: t[4] + t[5],
+                    name: t[6] + ' ' + t[7],
+                    customerSourceId: t[0],
+                    customerId: t[1],
+                    locationSourceId: t[4],
+                    locationId: t[5],
+                    locationCode: t[6],
+                    locationDescription: t[7]
+                };
+            })
+            .filter((item, index, self) => {
+                return item.id !== '' && index === self.findIndex(t => (t.id === item.id));
+            });
+    }
+
     private filterCustomers(siteSourceId: string): Array<any> {
         let result;
         if (siteSourceId) {
-            result = this.customers.filter(t => t.siteSourceId === siteSourceId);
+            result = this.customers.filter(t => t.siteSourceId === +siteSourceId);
         } else {
             result = this.customers;
         }
