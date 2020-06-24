@@ -60,7 +60,7 @@ export class QuestionSheetResourcesService {
     public customerCollection(selector: any): Observable<any> {
         this.sheetName = this.sites.filter(item => item.siteSourceId === selector.siteSourceId)[0].customerSheetName;
         const url = QuestionSheetResourceConstants.CUSTOMERS.replace('{sheetId}', this.dropdownSheetId).replace('{sheetName}', this.sheetName);
-        console.log(this.sheetName);
+
         const data = new Observable((observer: any) => {
             this.resourceTemplates.get(url, {})
                 .subscribe(
