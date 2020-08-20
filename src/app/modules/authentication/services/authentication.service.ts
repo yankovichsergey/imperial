@@ -5,6 +5,7 @@ import {
     Observable,
     Subject
 } from 'rxjs';
+import { Configuration } from 'msal';
 import * as Msal from 'msal';
 import { environment } from '../../../../environments/environment';
 
@@ -23,10 +24,15 @@ export class AuthenticationService {
     }
 
     constructor() {
-        const msalConfig = {
+        const msalConfig: Configuration = {
             auth: {
                 clientId: environment.clientId,
-                redirectUri: environment.redirectUri
+                redirectUri: environment.redirectUri,
+                authority: environment.authority,
+            },
+            cache: {
+                cacheLocation: 'localStorage',
+                storeAuthStateInCookie: true,
             }
         };
         this.msalInstance = new Msal.UserAgentApplication(msalConfig);
