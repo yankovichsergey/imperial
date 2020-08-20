@@ -28,10 +28,10 @@ export class ResourceTemplatesService {
         return data;
     }
 
-    public put: (url: string, dataContract: any) => Observable<any> = (url: string, dataContract: any) => {
+    public put: (url: string, dataContract: any, options?: any) => Observable<any> = (url: string, dataContract: any, options?: any) => {
         const data = new Observable((observer: any) => {
             const transformResult = this.transformUrlByParams(url, dataContract);
-            this.http.put(transformResult.url, transformResult.params)
+            this.http.put(transformResult.url, transformResult.params, options)
                 .subscribe(
                     (response: any) => {
                         if (response) {

@@ -23,6 +23,7 @@ export const environment = {
     postLogoutRedirectUri: keys.postLogoutRedirectUri,
     driveId: keys.driveId,
     folderId: keys.folderId,
+    imagesFolderId: keys.imagesFolderId
 };
 
 

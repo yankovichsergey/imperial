@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { mergeMap } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
 import { ResourceTemplatesService } from '@appServices';
 import {
     QuestionSheetNameConstant,
@@ -96,13 +97,14 @@ export class QuestionSheetResourcesService {
     public uploadImage(data: File): Observable<any> {
         const contract = {
             item: {
-                '@odata.type': 'microsoft.graph.driveItemUploadableProperties',
                 '@microsoft.graph.conflictBehavior': 'rename',
                 name: data.name
             }
         };
+        const headers = new HttpHeaders({'Content-Range': `bytes 0-${data.size - 1}/${data.size}`});
+
         return this.resourceTemplates.post(QuestionSheetResourceConstants.UPLOAD_FILE_BY_SESSION.replace('{fileName}', data.name), contract)
-            .pipe(mergeMap(item => this.resourceTemplates.put(item.uploadUrl, data)));
+            .pipe(mergeMap(item => this.resourceTemplates.put(item.uploadUrl, data, {headers})));
     }
 
     private sitesResponseToCollection(response: any): Array<any> {
