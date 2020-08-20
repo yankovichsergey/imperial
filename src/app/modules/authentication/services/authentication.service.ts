@@ -6,7 +6,7 @@ import {
     Subject
 } from 'rxjs';
 import { Configuration } from 'msal';
-import * as Msal from 'msal';
+import { UserAgentApplication } from 'msal';
 import { environment } from '../../../../environments/environment';
 
 
@@ -16,7 +16,7 @@ import { environment } from '../../../../environments/environment';
 
 export class AuthenticationService {
 
-    private msalInstance: any;
+    private msalInstance: UserAgentApplication;
     private subject: Subject<any>;
 
     public get userToken(): Observable<string> {
@@ -28,14 +28,10 @@ export class AuthenticationService {
             auth: {
                 clientId: environment.clientId,
                 redirectUri: environment.redirectUri,
-                authority: environment.authority,
-            },
-            cache: {
-                cacheLocation: 'localStorage',
-                storeAuthStateInCookie: true,
+                navigateToLoginRequestUrl: false
             }
         };
-        this.msalInstance = new Msal.UserAgentApplication(msalConfig);
+        this.msalInstance = new UserAgentApplication(msalConfig);
         this.subject = new Subject<any>();
     }
 
@@ -59,8 +55,8 @@ export class AuthenticationService {
 
     public refresh(): Observable<any> {
         const isAccount = this.msalInstance.getAccount();
-        if (isAccount) {
-            return new Observable((observer: any) => {
+        return new Observable((observer: any) => {
+            if (isAccount) {
                 this.msalInstance.acquireTokenSilent(this.getLoginRequest())
                     .then(response => {
                         localStorage.setItem('access_token', response.accessToken);
@@ -69,8 +65,11 @@ export class AuthenticationService {
                     .catch(err => {
                         observer.next(err);
                     });
-            });
-        }
+            } else {
+                this.msalInstance.loginRedirect(this.getLoginRequest());
+                observer.next();
+            }
+        });
     }
 
     public getToken(): string {
