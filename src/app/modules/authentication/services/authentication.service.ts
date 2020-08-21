@@ -5,8 +5,11 @@ import {
     Observable,
     Subject
 } from 'rxjs';
-import { Configuration } from 'msal';
-import { UserAgentApplication } from 'msal';
+import {
+    UserAgentApplication,
+    AuthResponse,
+    Configuration
+} from 'msal';
 import { environment } from '../../../../environments/environment';
 
 
@@ -28,7 +31,7 @@ export class AuthenticationService {
             auth: {
                 clientId: environment.clientId,
                 redirectUri: environment.redirectUri,
-                navigateToLoginRequestUrl: false
+                navigateToLoginRequestUrl: true
             }
         };
         this.msalInstance = new UserAgentApplication(msalConfig);
@@ -39,14 +42,26 @@ export class AuthenticationService {
         this.msalInstance.handleRedirectCallback((error, response) => {
         });
 
-        this.msalInstance.loginPopup(this.getLoginRequest()).then(response => {
+        if (!this.msalInstance.getAccount()) {
+            this.msalInstance.loginRedirect(this.getLoginRequest());
+        } else {
+            this.msalInstance.acquireTokenSilent(this.getLoginRequest()).then((accessToken: AuthResponse) => {
+                localStorage.setItem('access_token', accessToken.accessToken);
+                this.subject.next(accessToken.accessToken);
+            }).catch((error: any) => {
+                console.log(error);
+            });
+        }
+
+
+        /*this.msalInstance.loginPopup(this.getLoginRequest()).then(response => {
             this.msalInstance.acquireTokenSilent(this.getLoginRequest()).then((accessToken) => {
                 localStorage.setItem('access_token', accessToken.accessToken);
                 this.subject.next(accessToken.accessToken);
             });
         }).catch(err => {
             console.log(err);
-        });
+        });*/
     }
 
     public signOut(): void {
@@ -61,13 +76,9 @@ export class AuthenticationService {
                     .then(response => {
                         localStorage.setItem('access_token', response.accessToken);
                         observer.next(response.accessToken);
-                    })
-                    .catch(err => {
-                        observer.next(err);
-                    });
-            } else {
-                this.msalInstance.loginRedirect(this.getLoginRequest());
-                observer.next();
+                    }).catch(err => {
+                    observer.error(err);
+                });
             }
         });
     }
