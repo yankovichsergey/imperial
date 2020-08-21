@@ -1,8 +1,8 @@
 {
   "folderId": "01ZWMUT6MXJQGE3PDSLZGIMO6QDWOSCMPW",
   "driveId": "b!hq2oXHabhEaAxajFhX4zxk_H8wIpPihAl30HChTD5SrBbZHhOXaPRJts_HVFfxgZ",
-  "clientId": "f255ef72-6ea3-444b-aea5-000c38fd9b84",
+  "clientId": "36a1b198-aaf3-4c59-b507-992aa515aa64",
   "imagesFolderId": "01ZWMUT6MHXMCIRXCH6FA2YRXMKQUC52WC",
-  "redirectUri": "https://yankovichsergey.github.io/imperialTest",
-  "postLogoutRedirectUri": "https://yankovichsergey.github.io/imperialTest"
+  "redirectUri": "http://localhost:4340",
+  "postLogoutRedirectUri": "http://localhost:4340/"
 }

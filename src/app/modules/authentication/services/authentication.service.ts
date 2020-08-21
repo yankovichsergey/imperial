@@ -6,10 +6,10 @@ import {
     Subject
 } from 'rxjs';
 import {
-    UserAgentApplication,
-    AuthResponse,
-    Configuration
-} from 'msal';
+    PublicClientApplication,
+    Configuration,
+    AuthenticationResult
+} from '@azure/msal-browser';
 import { environment } from '../../../../environments/environment';
 
 
@@ -19,8 +19,8 @@ import { environment } from '../../../../environments/environment';
 
 export class AuthenticationService {
 
-    private msalInstance: UserAgentApplication;
-    private subject: Subject<any>;
+    private msalInstance: PublicClientApplication;
+    private subject: Subject<string>;
 
     public get userToken(): Observable<string> {
         return this.subject.asObservable();
@@ -32,26 +32,34 @@ export class AuthenticationService {
                 clientId: environment.clientId,
                 redirectUri: environment.redirectUri,
                 navigateToLoginRequestUrl: true
+            },
+            cache: {
+                cacheLocation: 'localStorage',
+                storeAuthStateInCookie: true
             }
         };
-        this.msalInstance = new UserAgentApplication(msalConfig);
-        this.subject = new Subject<any>();
+        this.msalInstance = new PublicClientApplication(msalConfig);
+        this.subject = new Subject<string>();
     }
 
     public singIn(): void {
-        this.msalInstance.handleRedirectCallback((error, response) => {
-        });
 
-        if (!this.msalInstance.getAccount()) {
-            this.msalInstance.loginRedirect(this.getLoginRequest());
-        } else {
-            this.msalInstance.acquireTokenSilent(this.getLoginRequest()).then((accessToken: AuthResponse) => {
-                localStorage.setItem('access_token', accessToken.accessToken);
-                this.subject.next(accessToken.accessToken);
-            }).catch((error: any) => {
-                console.log(error);
-            });
-        }
+        const isAccount = this.msalInstance.getAllAccounts();
+
+        this.msalInstance.handleRedirectPromise().then((response: AuthenticationResult) => {
+            if (response) {
+                localStorage.setItem('access_token', response.accessToken);
+                this.subject.next(response.accessToken);
+            } else {
+                if (!isAccount) {
+                    this.msalInstance.loginRedirect(this.getLoginRequest());
+                } else {
+                    this.acquireTokenSilent().then((res) => {
+                        console.log(res);
+                    });
+                }
+            }
+        });
 
 
         /*this.msalInstance.loginPopup(this.getLoginRequest()).then(response => {
@@ -69,7 +77,7 @@ export class AuthenticationService {
     }
 
     public refresh(): Observable<any> {
-        const isAccount = this.msalInstance.getAccount();
+        const isAccount = this.msalInstance.getAllAccounts();
         return new Observable((observer: any) => {
             if (isAccount) {
                 this.msalInstance.acquireTokenSilent(this.getLoginRequest())
@@ -86,6 +94,17 @@ export class AuthenticationService {
     public getToken(): string {
         const token = localStorage.getItem('access_token');
         return token;
+    }
+
+    private async acquireTokenSilent(): Promise<any> {
+        return await this.msalInstance.acquireTokenSilent(this.getLoginRequest()).then((res: AuthenticationResult) => {
+            localStorage.setItem('access_token', res.accessToken);
+            this.subject.next(res.accessToken);
+        }).catch((error: any) => {
+            return this.msalInstance.acquireTokenRedirect(error).then(tokenResponse => {
+                return tokenResponse;
+            });
+        });
     }
 
     private getLoginRequest(): any {

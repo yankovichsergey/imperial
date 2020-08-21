@@ -11,14 +11,13 @@ import {
     BehaviorSubject,
     throwError
 } from 'rxjs';
-import { AuthenticationService } from '../services';
 import {
     switchMap,
     catchError,
     filter,
     take
 } from 'rxjs/operators';
-import { AuthenticationResourceConstants } from '../constants/authenticationResource.constants';
+import { AuthenticationService } from '../services';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -29,7 +28,7 @@ export class JwtInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthenticationService) {
     }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const loggedIn = this.authenticationService.getToken();
         if (loggedIn) {
             request = this.addToken(request, loggedIn);
